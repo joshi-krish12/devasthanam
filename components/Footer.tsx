@@ -1,9 +1,24 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Footer() {
   return (
     <footer className="footer">
       <div className="container">
+        <div className="footer-logo">
+          <div className="footer-logo-container">
+            <Image 
+              src="/logo.jpg" 
+              alt="Devasthanam - Sacred Craftsmanship for Your Home" 
+              width={200}
+              height={100}
+              className="footer-logo-image"
+              style={{ objectFit: 'contain' }}
+              unoptimized
+            />
+          </div>
+          <p className="footer-tagline">Sacred Craftsmanship for Your Home</p>
+        </div>
         <div className="footer-content">
           <div className="footer-section">
             <h3>House of Devasthanam</h3>
