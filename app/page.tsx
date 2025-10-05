@@ -6,6 +6,9 @@ import { useState, useEffect } from 'react'
 
 export default function Home() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [showNewsletter, setShowNewsletter] = useState(false)
+  const [currency, setCurrency] = useState('INR')
   
   const testimonials = [
     {
@@ -29,10 +32,36 @@ export default function Home() {
   ]
 
   useEffect(() => {
+    // Pre-loader
+    setTimeout(() => setLoading(false), 2000)
+    
+    // Newsletter popup after 10 seconds
+    const newsletterTimer = setTimeout(() => setShowNewsletter(true), 10000)
+    
+    // Testimonial slider
     const interval = setInterval(() => {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
     }, 5000)
-    return () => clearInterval(interval)
+    
+    // Scroll animations
+    const handleScroll = () => {
+      const elements = document.querySelectorAll('.fade-in-up')
+      elements.forEach((el) => {
+        const rect = el.getBoundingClientRect()
+        if (rect.top < window.innerHeight * 0.85) {
+          el.classList.add('visible')
+        }
+      })
+    }
+    
+    window.addEventListener('scroll', handleScroll)
+    handleScroll() // Check on mount
+    
+    return () => {
+      clearInterval(interval)
+      clearTimeout(newsletterTimer)
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [testimonials.length])
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -40,10 +69,46 @@ export default function Home() {
     alert('Thank you for your inquiry! Our team will contact you within 24 hours.')
   }
 
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    setShowNewsletter(false)
+    alert('Thank you for subscribing to our newsletter!')
+  }
+
   return (
     <>
+      {/* Pre-loader */}
+      {loading && (
+        <div className="preloader">
+          <div className="preloader-content">
+            <div className="preloader-logo">Devasthanam</div>
+            <div className="preloader-spinner"></div>
+          </div>
+        </div>
+      )}
+
+      {/* Newsletter Popup */}
+      {showNewsletter && (
+        <div className="newsletter-popup-overlay" onClick={() => setShowNewsletter(false)}>
+          <div className="newsletter-popup" onClick={(e) => e.stopPropagation()}>
+            <button className="popup-close" onClick={() => setShowNewsletter(false)}>
+              <i className="fas fa-times"></i>
+            </button>
+            <div className="popup-content">
+              <h2>Stay Connected with Us</h2>
+              <p>Receive updates on our new collections, craftsmanship, and exclusive offers</p>
+              <form onSubmit={handleNewsletterSubmit}>
+                <input type="email" placeholder="Enter your email" required />
+                <button type="submit" className="btn btn-primary">Subscribe</button>
+              </form>
+              <p className="popup-note">*By subscribing, you agree to receive emails from Devasthanam</p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
-      <section className="hero">
+      <section className="hero hero-enhanced">
         <div className="hero-content">
           <div>
             <h1>Your Spiritual Connection, Made Simple</h1>
@@ -65,8 +130,95 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Our Philosophy Section - Inspired by Celestile */}
+      <section className="our-philosophy fade-in-up">
+        <div className="container">
+          <div className="philosophy-content">
+            <div className="philosophy-text">
+              <h2>Crafting Sacred Spaces with Divine Precision</h2>
+              <div className="philosophy-subtitle">Our Head-Heart-Hand Approach</div>
+              <div className="philosophy-grid">
+                <div className="philosophy-card">
+                  <div className="philosophy-icon">
+                    <i className="fas fa-brain"></i>
+                  </div>
+                  <h3>Head</h3>
+                  <p>Visualizing sacred spaces with artistic vision and meticulous planning. Every design is thoughtfully conceptualized to resonate with spiritual energy.</p>
+                </div>
+                <div className="philosophy-card">
+                  <div className="philosophy-icon">
+                    <i className="fas fa-heart"></i>
+                  </div>
+                  <h3>Heart</h3>
+                  <p>The passion and devotion we pour into each project. Our designs are crafted with love, honoring the sacred traditions they represent.</p>
+                </div>
+                <div className="philosophy-card">
+                  <div className="philosophy-icon">
+                    <i className="fas fa-hand-holding-heart"></i>
+                  </div>
+                  <h3>Hand</h3>
+                  <p>Flawless execution and skilled craftsmanship. Our master artisans bring designs to life with precision and expertise passed through generations.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Artisan Showcase - Inspired by ORVI */}
+      <section className="artisan-showcase fade-in-up">
+        <div className="container">
+          <h2>Our Master Craftsmen</h2>
+          <p className="section-subtitle">With over 20+ years of experience, our artisans blend traditional techniques with modern innovation</p>
+          <div className="artisan-grid">
+            <div className="artisan-card">
+              <div className="artisan-image">
+                <Image 
+                  src="https://images.unsplash.com/photo-1534430480872-3498386e7856?w=400&h=400&fit=crop" 
+                  alt="Master Craftsman"
+                  width={400}
+                  height={400}
+                />
+              </div>
+              <div className="artisan-info">
+                <h3>Marble Carving</h3>
+                <p>Intricate hand-carved details that bring life to every piece</p>
+              </div>
+            </div>
+            <div className="artisan-card">
+              <div className="artisan-image">
+                <Image 
+                  src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=400&fit=crop" 
+                  alt="Stone Artisan"
+                  width={400}
+                  height={400}
+                />
+              </div>
+              <div className="artisan-info">
+                <h3>Stone Inlay Work</h3>
+                <p>Precision inlay work creating mesmerizing patterns</p>
+              </div>
+            </div>
+            <div className="artisan-card">
+              <div className="artisan-image">
+                <Image 
+                  src="https://images.unsplash.com/photo-1597476041509-4ec9ce4a7fd0?w=400&h=400&fit=crop" 
+                  alt="Temple Designer"
+                  width={400}
+                  height={400}
+                />
+              </div>
+              <div className="artisan-info">
+                <h3>Temple Design</h3>
+                <p>Architectural excellence rooted in ancient wisdom</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* How It Works Section */}
-      <section className="how-it-works">
+      <section className="how-it-works fade-in-up">
         <div className="container">
           <h2>Your Dream Temple in 5 steps</h2>
           <p>Looking to design your Dream Temple? Here&apos;s how you can get started.</p>
@@ -296,35 +448,116 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Clients Section */}
-      <section className="clients">
+      {/* Catalog Section - Inspired by Osaanj */}
+      <section id="catalog" className="catalog-section fade-in-up">
         <div className="container">
-          <h2>Our Clients</h2>
-          <div className="clients-grid">
-            <div className="client-logo">
-              <Image src="https://via.placeholder.com/150x80/f0f0f0/666?text=Client+1" alt="Client 1" width={150} height={80} />
+          <h2>Explore Our Collections</h2>
+          <p className="section-subtitle">Download our comprehensive catalogs to discover our full range of divine creations</p>
+          <div className="catalog-grid">
+            <div className="catalog-card">
+              <div className="catalog-image">
+                <Image 
+                  src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=500&fit=crop" 
+                  alt="Pooja Rooms Catalog"
+                  width={400}
+                  height={500}
+                />
+                <div className="catalog-overlay">
+                  <i className="fas fa-download"></i>
+                </div>
+              </div>
+              <div className="catalog-info">
+                <h3>Pooja Rooms Collection</h3>
+                <p>Explore our premium pooja room designs</p>
+                <a href="#" className="btn btn-outline">Download Catalog</a>
+              </div>
             </div>
-            <div className="client-logo">
-              <Image src="https://via.placeholder.com/150x80/f0f0f0/666?text=Client+2" alt="Client 2" width={150} height={80} />
+            <div className="catalog-card">
+              <div className="catalog-image">
+                <Image 
+                  src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=500&fit=crop" 
+                  alt="Dream Temples Catalog"
+                  width={400}
+                  height={500}
+                />
+                <div className="catalog-overlay">
+                  <i className="fas fa-download"></i>
+                </div>
+              </div>
+              <div className="catalog-info">
+                <h3>Dream Temples Collection</h3>
+                <p>Browse our exquisite temple designs</p>
+                <a href="#" className="btn btn-outline">Download Catalog</a>
+              </div>
             </div>
-            <div className="client-logo">
-              <Image src="https://via.placeholder.com/150x80/f0f0f0/666?text=Client+3" alt="Client 3" width={150} height={80} />
+            <div className="catalog-card">
+              <div className="catalog-image">
+                <Image 
+                  src="https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=400&h=500&fit=crop" 
+                  alt="Marble Works Catalog"
+                  width={400}
+                  height={500}
+                />
+                <div className="catalog-overlay">
+                  <i className="fas fa-download"></i>
+                </div>
+              </div>
+              <div className="catalog-info">
+                <h3>Premium Marble Works</h3>
+                <p>Discover our finest marble craftsmanship</p>
+                <a href="#" className="btn btn-outline">Download Catalog</a>
+              </div>
             </div>
-            <div className="client-logo">
-              <Image src="https://via.placeholder.com/150x80/f0f0f0/666?text=Client+4" alt="Client 4" width={150} height={80} />
+          </div>
+        </div>
+      </section>
+
+      {/* Clients Section - Enhanced */}
+      <section className="clients clients-enhanced fade-in-up">
+        <div className="container">
+          <h2>Trusted by Families Across the Globe</h2>
+          <p className="section-subtitle">From luxury residences to heritage temples, our work speaks for itself</p>
+          <div className="client-categories">
+            <div className="category-section">
+              <h3>Residential Projects</h3>
+              <div className="clients-grid">
+                <div className="client-logo">
+                  <div className="client-placeholder">Luxury Villa - Mumbai</div>
+                </div>
+                <div className="client-logo">
+                  <div className="client-placeholder">Penthouse - Delhi</div>
+                </div>
+                <div className="client-logo">
+                  <div className="client-placeholder">Heritage Home - Jaipur</div>
+                </div>
+                <div className="client-logo">
+                  <div className="client-placeholder">Modern Apartment - Bangalore</div>
+                </div>
+              </div>
             </div>
-            <div className="client-logo">
-              <Image src="https://via.placeholder.com/150x80/f0f0f0/666?text=Client+5" alt="Client 5" width={150} height={80} />
-            </div>
-            <div className="client-logo">
-              <Image src="https://via.placeholder.com/150x80/f0f0f0/666?text=Client+6" alt="Client 6" width={150} height={80} />
+            <div className="category-section">
+              <h3>Institutional Projects</h3>
+              <div className="clients-grid">
+                <div className="client-logo">
+                  <div className="client-placeholder">Community Temple</div>
+                </div>
+                <div className="client-logo">
+                  <div className="client-placeholder">Ashram - Rishikesh</div>
+                </div>
+                <div className="client-logo">
+                  <div className="client-placeholder">Gurudwara - Amritsar</div>
+                </div>
+                <div className="client-logo">
+                  <div className="client-placeholder">Heritage Temple</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Projects Section */}
-      <section className="projects-showcase">
+      <section id="projects" className="projects-showcase fade-in-up">
         <div className="container">
           <h2>Explore Our Projects</h2>
           <div className="projects-grid">
@@ -372,7 +605,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="testimonials">
+      <section id="testimonials" className="testimonials fade-in-up">
         <div className="container">
           <h2>1000+ Happy Families</h2>
           <div className="testimonials-slider">

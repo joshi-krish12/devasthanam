@@ -1,10 +1,21 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const playfair = Playfair_Display({ 
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap',
+  weight: ['400', '500', '600', '700', '900'],
+})
 
 export const metadata: Metadata = {
   title: 'Devasthanam - Your Ultimate Pooja Room Destination',
@@ -44,7 +55,7 @@ export default function RootLayout({
       <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${playfair.variable}`}>
         <Navbar />
         <main>{children}</main>
         <Footer />
