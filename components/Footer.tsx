@@ -42,8 +42,8 @@ export default function Footer() {
             <ul>
               <li><Link href="/faq">FAQs</Link></li>
               <li><Link href="/location">Stores</Link></li>
-              <li><a href="tel:+919319374633">Call Us</a></li>
-              <li><a href="mailto:info@devasthanam.com">Email</a></li>
+              <li><a href="tel:+919007137413">Call Us</a></li>
+              <li><a href="mailto:kanikainteriorsolution.com">Email</a></li>
             </ul>
           </div>
         </div>
@@ -59,8 +59,8 @@ export default function Footer() {
         </div>
         <div className="footer-bottom">
           <div className="contact-info">
-            <p><strong>Address:</strong> First & Second Floor, Devasthanam India, Mall 21, Mirza Ismail Road, Opposite Rajmandir Cinema, 5 Batti, C Scheme, Jaipur, Rajasthan 302001</p>
-            <p><strong>Call:</strong> +91 93193 74633 | <strong>Email:</strong> info@devasthanam.com</p>
+            <p><strong>Address:</strong> 48, SN Roy Rd, Sahapur, New Alipore, Kolkata, West Bengal 700038</p>
+            <p><strong>Call:</strong> +91 90071 37413 | <strong>Email:</strong> kanikainteriorsolution.com</p>
           </div>
           <p className="copyright">All Rights Reserved @2025 Devasthanam India</p>
         </div>
