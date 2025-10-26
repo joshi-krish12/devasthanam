@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import CountUpOnView from '@/components/CountUpOnView'
 
 export default function Home() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
@@ -429,24 +430,24 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="stats">
-        <div className="container">
-          <div className="stats-grid">
-            <div className="stat-item">
-              <h3>500+</h3>
-              <p>Completed Custom Projects</p>
-            </div>
-            <div className="stat-item">
-              <h3>50+</h3>
-              <p>Cities</p>
-            </div>
-            <div className="stat-item">
-              <h3>15+</h3>
-              <p>Years Experience</p>
-            </div>
+    <section className="stats fade-in-up">
+      <div className="container">
+        <div className="stats-grid">
+          <div className="stat-item">
+            <CountUpOnView end={500} />
+            <p>Completed Custom Projects</p>
+          </div>
+          <div className="stat-item">
+            <CountUpOnView end={50} />
+            <p>Cities</p>
+          </div>
+          <div className="stat-item">
+            <CountUpOnView end={15} />
+            <p>Years Experience</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* Catalog Section - Inspired by Osaanj */}
       <section id="catalog" className="catalog-section fade-in-up">
