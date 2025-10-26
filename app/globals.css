@@ -163,6 +163,12 @@ p {
     padding: 0 20px;
 }
 
+.d-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Pre-loader Styles */
 .preloader {
     position: fixed;

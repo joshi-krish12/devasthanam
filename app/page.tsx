@@ -608,7 +608,14 @@ export default function Home() {
       {/* Testimonials Section */}
       <section id="testimonials" className="testimonials fade-in-up">
         <div className="container">
-          <h2>1000+ Happy Families</h2>
+          <h2>
+            <div className='d-flex'>
+              <div style={{ marginRight: '10px' }}>
+                <CountUpOnView end={1000} /> 
+              </div>
+              Happy Families
+            </div>
+          </h2>
           <div className="testimonials-slider">
             {testimonials.map((testimonial, index) => (
               <div 
