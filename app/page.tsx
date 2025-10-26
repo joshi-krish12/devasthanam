@@ -120,7 +120,7 @@ export default function Home() {
           </div>
           <div className="hero-image">
             <Image 
-              src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop" 
+              src="/temple design.png" 
               alt="Beautiful Marble Temple"
               width={800}
               height={400}
@@ -174,7 +174,7 @@ export default function Home() {
             <div className="artisan-card">
               <div className="artisan-image">
                 <Image 
-                  src="https://images.unsplash.com/photo-1534430480872-3498386e7856?w=400&h=400&fit=crop" 
+                  src="/marble-craving.png" 
                   alt="Master Craftsman"
                   width={400}
                   height={400}
@@ -188,7 +188,7 @@ export default function Home() {
             <div className="artisan-card">
               <div className="artisan-image">
                 <Image 
-                  src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=400&fit=crop" 
+                  src="/stone-design1.png" 
                   alt="Stone Artisan"
                   width={400}
                   height={400}
@@ -202,7 +202,7 @@ export default function Home() {
             <div className="artisan-card">
               <div className="artisan-image">
                 <Image 
-                  src="https://images.unsplash.com/photo-1597476041509-4ec9ce4a7fd0?w=400&h=400&fit=crop" 
+                  src="/landing page.png" 
                   alt="Temple Designer"
                   width={400}
                   height={400}
@@ -353,7 +353,7 @@ export default function Home() {
             </div>
             <div className="tour-image">
               <Image 
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop" 
+                src="/temple design.png" 
                 alt="Virtual Tour Experience"
                 width={600}
                 height={400}
@@ -372,7 +372,7 @@ export default function Home() {
             <div className="temple-card">
               <div className="temple-image">
                 <Image 
-                  src="https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=300&h=200&fit=crop" 
+                  src="/temple-2L.png" 
                   alt="3ft Wide Temple"
                   width={300}
                   height={200}
@@ -385,7 +385,7 @@ export default function Home() {
             <div className="temple-card">
               <div className="temple-image">
                 <Image 
-                  src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=200&fit=crop" 
+                  src="/temple-3L.png" 
                   alt="4ft Wide Temple"
                   width={300}
                   height={200}
@@ -398,7 +398,7 @@ export default function Home() {
             <div className="temple-card">
               <div className="temple-image">
                 <Image 
-                  src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop" 
+                  src="/temple-5L.png" 
                   alt="5ft Wide Temple"
                   width={300}
                   height={200}
@@ -411,7 +411,7 @@ export default function Home() {
             <div className="temple-card">
               <div className="temple-image">
                 <Image 
-                  src="https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=300&h=200&fit=crop" 
+                  src="/temple-7L.png" 
                   alt="6ft Wide Temple"
                   width={300}
                   height={200}
@@ -457,7 +457,7 @@ export default function Home() {
             <div className="catalog-card">
               <div className="catalog-image">
                 <Image 
-                  src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=500&fit=crop" 
+                  src="/landing page.png" 
                   alt="Pooja Rooms Catalog"
                   width={400}
                   height={500}
@@ -475,7 +475,7 @@ export default function Home() {
             <div className="catalog-card">
               <div className="catalog-image">
                 <Image 
-                  src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=500&fit=crop" 
+                  src="/temple design.png" 
                   alt="Dream Temples Catalog"
                   width={400}
                   height={500}
@@ -493,7 +493,7 @@ export default function Home() {
             <div className="catalog-card">
               <div className="catalog-image">
                 <Image 
-                  src="https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=400&h=500&fit=crop" 
+                  src="/marble-craving.png" 
                   alt="Marble Works Catalog"
                   width={400}
                   height={500}
@@ -563,7 +563,7 @@ export default function Home() {
           <div className="projects-grid">
             <div className="project-card">
               <Image 
-                src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop" 
+                src="/stone-design1.png" 
                 alt="Luxury Pooja Room"
                 width={400}
                 height={300}
@@ -575,7 +575,7 @@ export default function Home() {
             </div>
             <div className="project-card">
               <Image 
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop" 
+                src="/temple design.png" 
                 alt="Dream Temple"
                 width={400}
                 height={300}
@@ -587,7 +587,7 @@ export default function Home() {
             </div>
             <div className="project-card">
               <Image 
-                src="https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=400&h=300&fit=crop" 
+                src="/temple-7L.png" 
                 alt="Communal Temple"
                 width={400}
                 height={300}
