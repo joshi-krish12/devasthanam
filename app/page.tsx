@@ -4,6 +4,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import CountUpOnView from '@/components/CountUpOnView'
+// Static image imports enable automatic optimization, blur placeholders and reserved layout
+import heroTempleDesign from '@/public/temple design.png'
+import landingPageImg from '@/public/landing page.png'
+import marbleCravingImg from '@/public/marble-craving.png'
+import stoneDesign1Img from '@/public/stone-design1.png'
+import temple2LImg from '@/public/temple-2L.png'
+import temple3LImg from '@/public/temple-3L.png'
+import temple5LImg from '@/public/temple-5L.png'
+import temple7LImg from '@/public/temple-7L.png'
 
 export default function Home() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
@@ -121,11 +130,13 @@ export default function Home() {
           </div>
           <div className="hero-image">
             <Image 
-              src="/temple design.png" 
+              src={heroTempleDesign}
               alt="Beautiful Marble Temple"
               width={800}
               height={400}
               priority
+              placeholder="blur"
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </div>
         </div>
@@ -175,10 +186,12 @@ export default function Home() {
             <div className="artisan-card">
               <div className="artisan-image">
                 <Image 
-                  src="/marble-craving.png" 
+                  src={marbleCravingImg} 
                   alt="Master Craftsman"
                   width={400}
                   height={400}
+                  placeholder="blur"
+                  sizes="(max-width: 768px) 50vw, 400px"
                 />
               </div>
               <div className="artisan-info">
@@ -189,10 +202,12 @@ export default function Home() {
             <div className="artisan-card">
               <div className="artisan-image">
                 <Image 
-                  src="/stone-design1.png" 
+                  src={stoneDesign1Img} 
                   alt="Stone Artisan"
                   width={400}
                   height={400}
+                  placeholder="blur"
+                  sizes="(max-width: 768px) 50vw, 400px"
                 />
               </div>
               <div className="artisan-info">
@@ -203,10 +218,12 @@ export default function Home() {
             <div className="artisan-card">
               <div className="artisan-image">
                 <Image 
-                  src="/landing page.png" 
+                  src={landingPageImg} 
                   alt="Temple Designer"
                   width={400}
                   height={400}
+                  placeholder="blur"
+                  sizes="(max-width: 768px) 50vw, 400px"
                 />
               </div>
               <div className="artisan-info">
@@ -354,10 +371,12 @@ export default function Home() {
             </div>
             <div className="tour-image">
               <Image 
-                src="/temple design.png" 
+                src={heroTempleDesign} 
                 alt="Virtual Tour Experience"
                 width={600}
                 height={400}
+                placeholder="blur"
+                sizes="(max-width: 1024px) 100vw, 600px"
               />
             </div>
           </div>
@@ -373,10 +392,12 @@ export default function Home() {
             <div className="temple-card">
               <div className="temple-image">
                 <Image 
-                  src="/temple-2L.png" 
+                  src={temple2LImg} 
                   alt="3ft Wide Temple"
                   width={300}
                   height={200}
+                  placeholder="blur"
+                  sizes="(max-width: 768px) 50vw, 300px"
                 />
               </div>
               <h3>3ft Wide Temples</h3>
@@ -386,10 +407,12 @@ export default function Home() {
             <div className="temple-card">
               <div className="temple-image">
                 <Image 
-                  src="/temple-3L.png" 
+                  src={temple3LImg} 
                   alt="4ft Wide Temple"
                   width={300}
                   height={200}
+                  placeholder="blur"
+                  sizes="(max-width: 768px) 50vw, 300px"
                 />
               </div>
               <h3>4ft Wide Temples</h3>
@@ -399,10 +422,12 @@ export default function Home() {
             <div className="temple-card">
               <div className="temple-image">
                 <Image 
-                  src="/temple-5L.png" 
+                  src={temple5LImg} 
                   alt="5ft Wide Temple"
                   width={300}
                   height={200}
+                  placeholder="blur"
+                  sizes="(max-width: 768px) 50vw, 300px"
                 />
               </div>
               <h3>5ft Wide Temples</h3>
@@ -412,10 +437,12 @@ export default function Home() {
             <div className="temple-card">
               <div className="temple-image">
                 <Image 
-                  src="/temple-7L.png" 
+                  src={temple7LImg} 
                   alt="6ft Wide Temple"
                   width={300}
                   height={200}
+                  placeholder="blur"
+                  sizes="(max-width: 768px) 50vw, 300px"
                 />
               </div>
               <h3>6ft Wide & Beyond Temples</h3>
@@ -458,10 +485,12 @@ export default function Home() {
             <div className="catalog-card">
               <div className="catalog-image">
                 <Image 
-                  src="/landing page.png" 
+                  src={landingPageImg} 
                   alt="Pooja Rooms Catalog"
                   width={400}
                   height={500}
+                  placeholder="blur"
+                  sizes="(max-width: 1024px) 50vw, 400px"
                 />
                 <div className="catalog-overlay">
                   <i className="fas fa-download"></i>
@@ -476,10 +505,12 @@ export default function Home() {
             <div className="catalog-card">
               <div className="catalog-image">
                 <Image 
-                  src="/temple design.png" 
+                  src={heroTempleDesign} 
                   alt="Dream Temples Catalog"
                   width={400}
                   height={500}
+                  placeholder="blur"
+                  sizes="(max-width: 1024px) 50vw, 400px"
                 />
                 <div className="catalog-overlay">
                   <i className="fas fa-download"></i>
@@ -494,10 +525,12 @@ export default function Home() {
             <div className="catalog-card">
               <div className="catalog-image">
                 <Image 
-                  src="/marble-craving.png" 
+                  src={marbleCravingImg} 
                   alt="Marble Works Catalog"
                   width={400}
                   height={500}
+                  placeholder="blur"
+                  sizes="(max-width: 1024px) 50vw, 400px"
                 />
                 <div className="catalog-overlay">
                   <i className="fas fa-download"></i>
@@ -564,10 +597,12 @@ export default function Home() {
           <div className="projects-grid">
             <div className="project-card">
               <Image 
-                src="/stone-design1.png" 
+                src={stoneDesign1Img} 
                 alt="Luxury Pooja Room"
                 width={400}
                 height={300}
+                placeholder="blur"
+                sizes="(max-width: 1024px) 100vw, 400px"
               />
               <div className="project-overlay">
                 <h3>Luxury Pooja Room</h3>
@@ -576,10 +611,12 @@ export default function Home() {
             </div>
             <div className="project-card">
               <Image 
-                src="/temple design.png" 
+                src={heroTempleDesign} 
                 alt="Dream Temple"
                 width={400}
                 height={300}
+                placeholder="blur"
+                sizes="(max-width: 1024px) 100vw, 400px"
               />
               <div className="project-overlay">
                 <h3>Grand Dream Temple</h3>
@@ -588,10 +625,12 @@ export default function Home() {
             </div>
             <div className="project-card">
               <Image 
-                src="/temple-7L.png" 
+                src={temple7LImg} 
                 alt="Communal Temple"
                 width={400}
                 height={300}
+                placeholder="blur"
+                sizes="(max-width: 1024px) 100vw, 400px"
               />
               <div className="project-overlay">
                 <h3>Community Temple</h3>
