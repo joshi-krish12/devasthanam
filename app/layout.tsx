@@ -18,10 +18,18 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://devasthanam.com'),
   title: 'Devasthanam - Your Ultimate Pooja Room Destination',
   description: 'Premium marble temples and pooja rooms crafted with devotion and excellence. Transform your space with our exquisite sacred designs.',
   keywords: 'marble temple, pooja room, devasthanam, spiritual, home decor, marble mandir, dream temples',
   authors: [{ name: 'Devasthanam' }],
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     title: 'Devasthanam - Your Ultimate Pooja Room Destination',
     description: 'Premium marble temples and pooja rooms crafted with devotion and excellence.',

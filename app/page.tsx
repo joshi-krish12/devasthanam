@@ -131,7 +131,7 @@ export default function Home() {
           <div className="hero-image">
             <Image 
               src={heroTempleDesign}
-              alt="Beautiful Marble Temple"
+              alt="Beautiful Custom Marble Temple Design for Home Pooja Room"
               width={800}
               height={400}
               priority
@@ -372,7 +372,7 @@ export default function Home() {
             <div className="tour-image">
               <Image 
                 src={heroTempleDesign} 
-                alt="Virtual Tour Experience"
+                alt="3D Virtual Tour of Devasthanam Premium Marble Pooja Rooms"
                 width={600}
                 height={400}
                 placeholder="blur"
@@ -486,7 +486,7 @@ export default function Home() {
               <div className="catalog-image">
                 <Image 
                   src={landingPageImg} 
-                  alt="Pooja Rooms Catalog"
+                  alt="Devasthanam Marble Pooja Rooms Collection Catalog"
                   width={400}
                   height={500}
                   placeholder="blur"

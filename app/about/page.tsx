@@ -29,7 +29,7 @@ export default function About() {
             <div className="intro-image">
               <Image 
                 src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop" 
-                alt="Devasthanam Workshop"
+                alt="Devasthanam Marble Temple Carving Workshop and Artisans"
                 width={600}
                 height={400}
               />
