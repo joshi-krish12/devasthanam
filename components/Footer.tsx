@@ -3,81 +3,97 @@ import Image from 'next/image'
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer-v2">
       <div className="container">
-        <div className="footer-logo">
-          <div className="footer-logo-container">
-            <Image 
-              src="/logo.jpg" 
-              alt="Devasthanam - Sacred Craftsmanship for Your Home" 
-              width={200}
-              height={100}
-              className="footer-logo-image"
-              style={{ objectFit: 'contain' }}
-              unoptimized
-            />
+        <div className="footer-v2-top">
+          {/* Brand Column */}
+          <div className="footer-v2-brand">
+            <Link href="/">
+              <Image
+                src="/logo-transparent.png"
+                alt="Devasthanam"
+                width={160}
+                height={64}
+                className="footer-v2-logo"
+                style={{ objectFit: 'contain' }}
+                unoptimized
+              />
+            </Link>
+            <p>
+              Kolkata&apos;s premier Corian and stone interior specialists.
+              Crafting mandirs, wall panels, stone panels and table tops
+              that blend artistry with enduring quality.
+            </p>
+            <div className="footer-v2-social">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <i className="fab fa-instagram"></i>
+              </a>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <i className="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://wa.me/919007137413" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                <i className="fab fa-whatsapp"></i>
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                <i className="fab fa-youtube"></i>
+              </a>
+            </div>
           </div>
-          <p className="footer-tagline">Sacred Craftsmanship for Your Home</p>
-        </div>
-        <div className="footer-content">
-          <div className="footer-section">
-            <h3>House of Devasthanam</h3>
+
+          {/* Products Column */}
+          <div className="footer-v2-col">
+            <h4>Our Products</h4>
+            <ul>
+              <li><Link href="/contact">Corian Mandirs</Link></li>
+              <li><Link href="/contact">Wall Panels</Link></li>
+              <li><Link href="/contact">Stone Panels</Link></li>
+              <li><Link href="/contact">Table Tops</Link></li>
+              <li><Link href="/contact">Custom Projects</Link></li>
+            </ul>
+          </div>
+
+          {/* Company Column */}
+          <div className="footer-v2-col">
+            <h4>Company</h4>
             <ul>
               <li><Link href="/about">About Us</Link></li>
-              <li><Link href="/experience-centre">Experience Centre</Link></li>
-              <li><Link href="/team">The Team</Link></li>
-              <li><Link href="/collaborations">Collaborations</Link></li>
-              <li><Link href="/clients">Our Clients</Link></li>
-              <li><Link href="/careers">Careers</Link></li>
+              <li><Link href="/#projects">Gallery</Link></li>
+              <li><Link href="/#projects">Our Projects</Link></li>
+              <li><Link href="/contact">Careers</Link></li>
+              <li><Link href="/contact">Collaborations</Link></li>
             </ul>
           </div>
-          <div className="footer-section">
-            <h3>Quick links</h3>
+
+          {/* Contact Column */}
+          <div className="footer-v2-col">
+            <h4>Contact</h4>
             <ul>
-              <li><Link href="/how-it-works">How it Works</Link></li>
-              <li><Link href="/pooja-rooms">Pooja Room</Link></li>
-              <li><Link href="/dream-temples">Dream Temples</Link></li>
-              <li><Link href="/communal-temples">Communal Temples</Link></li>
-              <li><Link href="/services">Devasthanam International</Link></li>
-              <li><Link href="/contact">Book appointment</Link></li>
-            </ul>
-          </div>
-          <div className="footer-section">
-            <h3>Legal</h3>
-            <ul>
-              <li><Link href="/corporate-info">Corporate Info</Link></li>
-              <li><Link href="/terms">Terms & Conditions</Link></li>
-              <li><Link href="/privacy">Privacy Policy</Link></li>
-              <li><Link href="/cookies">Cookies Policy</Link></li>
-              <li><Link href="/disclaimer">Disclaimer</Link></li>
-            </ul>
-          </div>
-          <div className="footer-section">
-            <h3>Need Help</h3>
-            <ul>
-              <li><Link href="/faq">FAQs</Link></li>
-              <li><Link href="/location">Stores</Link></li>
-              <li><a href="tel:+919007137413">Call Us</a></li>
-              <li><a href="mailto:kanikainteriorsolution.com">Email</a></li>
+              <li>
+                <a href="tel:+919007137413">+91 90071 37413</a>
+              </li>
+              <li>
+                <a href="mailto:info@devasthanam.com">info@devasthanam.com</a>
+              </li>
+              <li>
+                <a href="https://maps.google.com/?q=48+SN+Roy+Rd+Kolkata" target="_blank" rel="noopener noreferrer">
+                  48, SN Roy Rd, New Alipore<br />Kolkata, WB — 700038
+                </a>
+              </li>
+              <li>
+                <Link href="/contact">Book a Consultation</Link>
+              </li>
             </ul>
           </div>
         </div>
-        <div className="footer-locations">
-          <div className="location-section">
-            <h4>Marble Temple across India:</h4>
-            <p>Marble Temple in Mumbai | Marble Temple in Delhi | Marble Temple in Bengaluru | Marble Temple in Hyderabad | Marble Temple in Ahmedabad | Marble Temple in Surat | Marble Temple in Kolkata | Marble Temple in Jaipur | Marble Temple in Pune</p>
+
+        {/* Bottom Bar */}
+        <div className="footer-v2-bottom">
+          <p>&copy; {new Date().getFullYear()} Devasthanam India. All rights reserved.</p>
+          <div className="footer-v2-bottom-links">
+            <Link href="/contact">Privacy Policy</Link>
+            <Link href="/contact">Terms &amp; Conditions</Link>
+            <Link href="/contact">Disclaimer</Link>
           </div>
-          <div className="location-section">
-            <h4>Marble Temple across the Globe:</h4>
-            <p>Marble Temple in Dubai | Marble Temple in USA | Marble Temple in Australia | Marble Temple in Tanzania | Marble Temple in UK</p>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <div className="contact-info">
-            <p><strong>Address:</strong> 48, SN Roy Rd, Sahapur, New Alipore, Kolkata, West Bengal 700038</p>
-            <p><strong>Call:</strong> +91 90071 37413 | <strong>Email:</strong> kanikainteriorsolution.com</p>
-          </div>
-          <p className="copyright">All Rights Reserved @2025 Devasthanam India</p>
         </div>
       </div>
     </footer>

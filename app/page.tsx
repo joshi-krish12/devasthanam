@@ -4,90 +4,117 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import CountUpOnView from '@/components/CountUpOnView'
-// Static image imports enable automatic optimization, blur placeholders and reserved layout
-import heroTempleDesign from '@/public/temple design.png'
 import landingPageImg from '@/public/landing page.png'
-import marbleCravingImg from '@/public/marble-craving.png'
+import heroTempleDesign from '@/public/temple design.png'
+import marbleCarvingImg from '@/public/marble-craving.png'
 import stoneDesign1Img from '@/public/stone-design1.png'
 import temple2LImg from '@/public/temple-2L.png'
 import temple3LImg from '@/public/temple-3L.png'
 import temple5LImg from '@/public/temple-5L.png'
 import temple7LImg from '@/public/temple-7L.png'
 
+const PRODUCTS = [
+  {
+    tag: 'Sacred Spaces',
+    name: 'Corian Mandirs',
+    desc: 'Seamless, non-porous Corian solid surface crafted into exquisite home mandirs — hygienic, timeless, and utterly divine.',
+    image: heroTempleDesign,
+    alt: 'Corian Mandir by Devasthanam',
+  },
+  {
+    tag: 'Interior Surfaces',
+    name: 'Wall Panels',
+    desc: 'Decorative Corian and stone wall panels that transform interiors with rich textures and architectural elegance.',
+    image: marbleCarvingImg,
+    alt: 'Wall Panels by Devasthanam',
+  },
+  {
+    tag: 'Natural Stone',
+    name: 'Stone Panels',
+    desc: 'Premium natural and engineered stone panels — marble, granite, and quartz — for walls, floors, and feature walls.',
+    image: stoneDesign1Img,
+    alt: 'Stone Panels by Devasthanam',
+  },
+  {
+    tag: 'Custom Surfaces',
+    name: 'Table Tops',
+    desc: 'Bespoke table tops in Corian and natural stone, built to exacting dimensions for beauty that lasts a lifetime.',
+    image: temple7LImg,
+    alt: 'Table Tops by Devasthanam',
+  },
+]
+
+const TESTIMONIALS = [
+  {
+    text: 'Devasthanam transformed our pooja room into something truly divine. The Corian mandir is seamless, pristine and absolutely beautiful. Our family is overjoyed.',
+    name: 'Rajesh Sharma',
+    location: 'Mumbai',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face',
+  },
+  {
+    text: 'The stone wall panels in our living room are the centrepiece of our home. Exceptional quality and the installation team was incredibly professional throughout.',
+    name: 'Priya Mehta',
+    location: 'Delhi',
+    image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&h=80&fit=crop&crop=face',
+  },
+  {
+    text: 'We ordered custom Corian table tops for our office — sleek, flawless, delivered on time. Devasthanam is our go-to for all premium surface work.',
+    name: 'Amit Jain',
+    location: 'Kolkata',
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face',
+  },
+]
+
+const GALLERY = [
+  { src: stoneDesign1Img, alt: 'Stone Panel Installation', label: 'Stone Panels', location: 'Kolkata Villa', featured: true },
+  { src: heroTempleDesign, alt: 'Corian Mandir', label: 'Corian Mandir', location: 'Residential Project' },
+  { src: marbleCarvingImg, alt: 'Wall Panel', label: 'Wall Panels', location: 'Corporate Office' },
+  { src: temple3LImg, alt: 'Custom Mandir', label: 'Corian Mandir', location: 'Delhi Residence' },
+  { src: temple5LImg, alt: 'Temple Design', label: 'Corian Mandir', location: 'Mumbai Penthouse' },
+  { src: temple2LImg, alt: 'Stone Table Top', label: 'Table Tops', location: 'Kolkata Restaurant' },
+]
+
+const TICKER = [
+  'Corian Mandirs', 'Wall Panels', 'Stone Panels', 'Table Tops',
+  'Kolkata Craftsmanship', 'Pan India Delivery', 'Custom Made',
+]
+
+const PROCESS = [
+  { n: '01', title: 'Free Consultation', desc: 'One-on-one consultation to understand your space, vision and budget — no obligation.' },
+  { n: '02', title: 'Design Proposal', desc: 'Custom design proposal with material samples, 3D references and transparent pricing.' },
+  { n: '03', title: 'Fabrication', desc: 'Precision fabrication at our Kolkata workshop by expert craftsmen using premium materials.' },
+  { n: '04', title: 'Quality Check', desc: 'Rigorous quality inspection of every piece before it leaves our facility.' },
+  { n: '05', title: 'Installation', desc: 'Professional installation at your site with full cleanup and final walkthrough.' },
+]
+
 export default function Home() {
-  const [currentTestimonial, setCurrentTestimonial] = useState(0)
   const [loading, setLoading] = useState(true)
-  const [showNewsletter, setShowNewsletter] = useState(false)
-  const [currency, setCurrency] = useState('INR')
-  
-  const testimonials = [
-    {
-      content: "Devasthanam created the most beautiful pooja room for our home. The craftsmanship is exceptional and the team was professional throughout the process.",
-      author: "Rajesh Sharma",
-      location: "Mumbai",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face"
-    },
-    {
-      content: "The virtual tour helped us visualize our dream temple perfectly. The final result exceeded our expectations in every way.",
-      author: "Priya Patel",
-      location: "Ahmedabad", 
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face"
-    },
-    {
-      content: "Outstanding quality and attention to detail. Our Jain temple is a masterpiece that brings peace to our daily prayers.",
-      author: "Amit Jain",
-      location: "Jaipur",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face"
-    }
-  ]
+  const [formData, setFormData] = useState({ name: '', phone: '', email: '', service: '', message: '' })
 
   useEffect(() => {
-    // Pre-loader
-    setTimeout(() => setLoading(false), 2000)
-    
-    // Newsletter popup after 10 seconds
-    const newsletterTimer = setTimeout(() => setShowNewsletter(true), 10000)
-    
-    // Testimonial slider
-    const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
-    }, 5000)
-    
-    // Scroll animations
-    const handleScroll = () => {
-      const elements = document.querySelectorAll('.fade-in-up')
-      elements.forEach((el) => {
-        const rect = el.getBoundingClientRect()
-        if (rect.top < window.innerHeight * 0.85) {
-          el.classList.add('visible')
-        }
-      })
-    }
-    
-    window.addEventListener('scroll', handleScroll)
-    handleScroll() // Check on mount
-    
+    const t = setTimeout(() => setLoading(false), 1600)
+
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible') }),
+      { threshold: 0.1 }
+    )
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el))
+
     return () => {
-      clearInterval(interval)
-      clearTimeout(newsletterTimer)
-      window.removeEventListener('scroll', handleScroll)
+      clearTimeout(t)
+      io.disconnect()
     }
-  }, [testimonials.length])
+  }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    alert('Thank you for your inquiry! Our team will contact you within 24 hours.')
-  }
-
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setShowNewsletter(false)
-    alert('Thank you for subscribing to our newsletter!')
+    alert('Thank you! Our team will reach out within 24 hours.')
+    setFormData({ name: '', phone: '', email: '', service: '', message: '' })
   }
 
   return (
     <>
-      {/* Pre-loader */}
+      {/* Preloader */}
       {loading && (
         <div className="preloader">
           <div className="preloader-content">
@@ -97,587 +124,219 @@ export default function Home() {
         </div>
       )}
 
-      {/* Newsletter Popup */}
-      {showNewsletter && (
-        <div className="newsletter-popup-overlay" onClick={() => setShowNewsletter(false)}>
-          <div className="newsletter-popup" onClick={(e) => e.stopPropagation()}>
-            <button className="popup-close" onClick={() => setShowNewsletter(false)}>
-              <i className="fas fa-times"></i>
-            </button>
-            <div className="popup-content">
-              <h2>Stay Connected with Us</h2>
-              <p>Receive updates on our new collections, craftsmanship, and exclusive offers</p>
-              <form onSubmit={handleNewsletterSubmit}>
-                <input type="email" placeholder="Enter your email" required />
-                <button type="submit" className="btn btn-primary">Subscribe</button>
-              </form>
-              <p className="popup-note">*By subscribing, you agree to receive emails from Devasthanam</p>
+      {/* ── HERO ──────────────────────────────────────────── */}
+      <section className="hero-v2">
+        <div className="hero-v2-bg">
+          <Image
+            src={landingPageImg}
+            alt="Devasthanam Premium Interiors"
+            fill
+            priority
+            quality={92}
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+          />
+          <div className="hero-v2-overlay" />
+        </div>
+        <div className="hero-v2-content">
+          <div className="hero-v2-inner">
+            <span className="hero-v2-badge">Kolkata · Pan India</span>
+            <h1 className="hero-v2-title">
+              Where Stone<br /><em>Meets Soul</em>
+            </h1>
+            <p className="hero-v2-desc">
+              Premium Corian Mandirs, Wall Panels, Stone Panels &amp; Table Tops —
+              handcrafted by master artisans in Kolkata.
+            </p>
+            <div className="hero-v2-cta">
+              <Link href="#products" className="btn-gold">Explore Collections</Link>
+              <Link href="/contact" className="btn-ghost-white">Book Free Consultation</Link>
             </div>
           </div>
         </div>
-      )}
-
-      {/* Hero Section */}
-      <section className="hero hero-enhanced">
-        <div className="hero-content">
-          <div>
-            <h1>Your Spiritual Connection, Made Simple</h1>
-            <p className="hero-subtitle">– Devasthanam</p>
-            <div className="hero-buttons">
-              <Link href="#pricing" className="btn btn-primary">Explore Our Collection</Link>
-              <Link href="/contact" className="btn btn-secondary">Book Consultation</Link>
-            </div>
-          </div>
-          <div className="hero-image">
-            <Image 
-              src={heroTempleDesign}
-              alt="Beautiful Marble Temple"
-              width={800}
-              height={400}
-              priority
-              placeholder="blur"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-          </div>
+        <div className="scroll-indicator">
+          <div className="scroll-mouse"></div>
+          <span>Scroll</span>
         </div>
       </section>
 
-      {/* Our Philosophy Section - Inspired by Celestile */}
-      <section className="our-philosophy fade-in-up">
-        <div className="container">
-          <div className="philosophy-content">
-            <div className="philosophy-text">
-              <h2>Crafting Sacred Spaces with Divine Precision</h2>
-              <div className="philosophy-subtitle">Our Head-Heart-Hand Approach</div>
-              <div className="philosophy-grid">
-                <div className="philosophy-card">
-                  <div className="philosophy-icon">
-                    <i className="fas fa-brain"></i>
-                  </div>
-                  <h3>Head</h3>
-                  <p>Visualizing sacred spaces with artistic vision and meticulous planning. Every design is thoughtfully conceptualized to resonate with spiritual energy.</p>
-                </div>
-                <div className="philosophy-card">
-                  <div className="philosophy-icon">
-                    <i className="fas fa-heart"></i>
-                  </div>
-                  <h3>Heart</h3>
-                  <p>The passion and devotion we pour into each project. Our designs are crafted with love, honoring the sacred traditions they represent.</p>
-                </div>
-                <div className="philosophy-card">
-                  <div className="philosophy-icon">
-                    <i className="fas fa-hand-holding-heart"></i>
-                  </div>
-                  <h3>Hand</h3>
-                  <p>Flawless execution and skilled craftsmanship. Our master artisans bring designs to life with precision and expertise passed through generations.</p>
-                </div>
-              </div>
+      {/* ── TICKER ────────────────────────────────────────── */}
+      <div className="ticker-section" aria-hidden="true">
+        <div className="ticker-track">
+          {[...TICKER, ...TICKER, ...TICKER].map((item, i) => (
+            <div key={i} className="ticker-item">
+              <span className="ticker-dot" />
+              {item}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Artisan Showcase - Inspired by ORVI */}
-      <section className="artisan-showcase fade-in-up">
-        <div className="container">
-          <h2>Our Master Craftsmen</h2>
-          <p className="section-subtitle">With over 20+ years of experience, our artisans blend traditional techniques with modern innovation</p>
-          <div className="artisan-grid">
-            <div className="artisan-card">
-              <div className="artisan-image">
-                <Image 
-                  src={marbleCravingImg} 
-                  alt="Master Craftsman"
-                  width={400}
-                  height={400}
-                  placeholder="blur"
-                  sizes="(max-width: 768px) 50vw, 400px"
-                />
-              </div>
-              <div className="artisan-info">
-                <h3>Marble Carving</h3>
-                <p>Intricate hand-carved details that bring life to every piece</p>
-              </div>
-            </div>
-            <div className="artisan-card">
-              <div className="artisan-image">
-                <Image 
-                  src={stoneDesign1Img} 
-                  alt="Stone Artisan"
-                  width={400}
-                  height={400}
-                  placeholder="blur"
-                  sizes="(max-width: 768px) 50vw, 400px"
-                />
-              </div>
-              <div className="artisan-info">
-                <h3>Stone Inlay Work</h3>
-                <p>Precision inlay work creating mesmerizing patterns</p>
-              </div>
-            </div>
-            <div className="artisan-card">
-              <div className="artisan-image">
-                <Image 
-                  src={landingPageImg} 
-                  alt="Temple Designer"
-                  width={400}
-                  height={400}
-                  placeholder="blur"
-                  sizes="(max-width: 768px) 50vw, 400px"
-                />
-              </div>
-              <div className="artisan-info">
-                <h3>Temple Design</h3>
-                <p>Architectural excellence rooted in ancient wisdom</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className="how-it-works fade-in-up">
-        <div className="container">
-          <h2>Your Dream Temple in 5 steps</h2>
-          <p>Looking to design your Dream Temple? Here&apos;s how you can get started.</p>
-          <div className="steps-grid">
-            <div className="step">
-              <div className="step-number">1</div>
-              <h3>Let&apos;s Connect One on One</h3>
-              <p>Personal consultation to understand your vision and requirements</p>
-            </div>
-            <div className="step">
-              <div className="step-number">2</div>
-              <h3>Explore our Catalog</h3>
-              <p>Browse through our extensive collection of designs and styles</p>
-            </div>
-            <div className="step">
-              <div className="step-number">3</div>
-              <h3>Place The Order</h3>
-              <p>Finalize your design and place your custom order</p>
-            </div>
-            <div className="step">
-              <div className="step-number">4</div>
-              <h3>Approval</h3>
-              <p>Review and approve the final design and specifications</p>
-            </div>
-            <div className="step">
-              <div className="step-number">5</div>
-              <h3>Delivery and Installation</h3>
-              <p>Professional delivery and installation at your location</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section id="pricing" className="pricing">
-        <div className="container">
-          <h2>Pooja Room for Every Budget</h2>
-          <p>Discover the perfect pooja room for your home with our curated categories, offering timeless designs at prices that fit every budget.</p>
-          <div className="pricing-grid">
-            <div className="pricing-card">
-              <div className="pricing-header">
-                <h3>Small Pooja Rooms</h3>
-                <p>upto 50 Sqft</p>
-              </div>
-              <div className="pricing-price">
-                <span>Starting at INR 12L</span>
-              </div>
-              <div className="pricing-features">
-                <ul>
-                  <li>Premium marble construction</li>
-                  <li>Custom design consultation</li>
-                  <li>Professional installation</li>
-                  <li>1-year warranty</li>
-                </ul>
-              </div>
-              <Link href="/contact" className="btn btn-outline">Get Quote</Link>
-            </div>
-            <div className="pricing-card">
-              <div className="pricing-header">
-                <h3>Medium Pooja Rooms</h3>
-                <p>upto 80 Sqft</p>
-              </div>
-              <div className="pricing-price">
-                <span>Starting at INR 20L</span>
-              </div>
-              <div className="pricing-features">
-                <ul>
-                  <li>Premium marble construction</li>
-                  <li>Enhanced design options</li>
-                  <li>Professional installation</li>
-                  <li>2-year warranty</li>
-                </ul>
-              </div>
-              <Link href="/contact" className="btn btn-outline">Get Quote</Link>
-            </div>
-            <div className="pricing-card featured">
-              <div className="pricing-header">
-                <h3>Large Pooja Rooms</h3>
-                <p>Upto 120sqft</p>
-              </div>
-              <div className="pricing-price">
-                <span>Starting at INR 25.75L</span>
-              </div>
-              <div className="pricing-features">
-                <ul>
-                  <li>Premium marble construction</li>
-                  <li>Luxury design elements</li>
-                  <li>Professional installation</li>
-                  <li>3-year warranty</li>
-                </ul>
-              </div>
-              <Link href="/contact" className="btn btn-primary">Get Quote</Link>
-            </div>
-            <div className="pricing-card">
-              <div className="pricing-header">
-                <h3>Grand Pooja Rooms</h3>
-                <p>150sqft</p>
-              </div>
-              <div className="pricing-price">
-                <span>Starting at INR 35L</span>
-              </div>
-              <div className="pricing-features">
-                <ul>
-                  <li>Premium marble construction</li>
-                  <li>Bespoke design service</li>
-                  <li>Professional installation</li>
-                  <li>5-year warranty</li>
-                </ul>
-              </div>
-              <Link href="/contact" className="btn btn-outline">Get Quote</Link>
-            </div>
-          </div>
-          <div className="pricing-cta">
-            <Link href="/pricing" className="btn btn-secondary">Understand Pricing</Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Virtual Tour Section */}
-      <section className="virtual-tour">
-        <div className="container">
-          <div className="tour-content">
-            <div className="tour-text">
-              <h2>Experience the Future with Devasthanam</h2>
-              <p>At Devasthanam, we blend technology, spirituality, and aesthetics, forming the core of our values. For the first time in the industry, we offer an immersive virtual tour of our Pooja Rooms, allowing you to explore our bespoke designs and craftsmanship from the comfort of your home.</p>
-              <ul className="tour-features">
-                <li><i className="fas fa-check"></i> View custom designs and layouts</li>
-                <li><i className="fas fa-check"></i> Experience our quality craftsmanship and materials</li>
-                <li><i className="fas fa-check"></i> Visualize how Devasthanam can elevate your space</li>
-              </ul>
-              <Link href="/virtual-tour" className="btn btn-primary">Start The Virtual Tour</Link>
-            </div>
-            <div className="tour-image">
-              <Image 
-                src={heroTempleDesign} 
-                alt="Virtual Tour Experience"
-                width={600}
-                height={400}
-                placeholder="blur"
-                sizes="(max-width: 1024px) 100vw, 600px"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Dream Temples Section */}
-      <section className="dream-temples">
-        <div className="container">
-          <h2>Dream Temple for Every Budget</h2>
-          <p>Transform your space with our exquisite Dream Temples, thoughtfully designed to suit every style and budget.</p>
-          <div className="temples-grid">
-            <div className="temple-card">
-              <div className="temple-image">
-                <Image 
-                  src={temple2LImg} 
-                  alt="3ft Wide Temple"
-                  width={300}
-                  height={200}
-                  placeholder="blur"
-                  sizes="(max-width: 768px) 50vw, 300px"
-                />
-              </div>
-              <h3>3ft Wide Temples</h3>
-              <p className="temple-price">Starting at INR 3.85L</p>
-              <Link href="/dream-temples" className="btn btn-outline">View Details</Link>
-            </div>
-            <div className="temple-card">
-              <div className="temple-image">
-                <Image 
-                  src={temple3LImg} 
-                  alt="4ft Wide Temple"
-                  width={300}
-                  height={200}
-                  placeholder="blur"
-                  sizes="(max-width: 768px) 50vw, 300px"
-                />
-              </div>
-              <h3>4ft Wide Temples</h3>
-              <p className="temple-price">Starting at INR 5.95L</p>
-              <Link href="/dream-temples" className="btn btn-outline">View Details</Link>
-            </div>
-            <div className="temple-card">
-              <div className="temple-image">
-                <Image 
-                  src={temple5LImg} 
-                  alt="5ft Wide Temple"
-                  width={300}
-                  height={200}
-                  placeholder="blur"
-                  sizes="(max-width: 768px) 50vw, 300px"
-                />
-              </div>
-              <h3>5ft Wide Temples</h3>
-              <p className="temple-price">Starting at INR 6.95L</p>
-              <Link href="/dream-temples" className="btn btn-outline">View Details</Link>
-            </div>
-            <div className="temple-card">
-              <div className="temple-image">
-                <Image 
-                  src={temple7LImg} 
-                  alt="6ft Wide Temple"
-                  width={300}
-                  height={200}
-                  placeholder="blur"
-                  sizes="(max-width: 768px) 50vw, 300px"
-                />
-              </div>
-              <h3>6ft Wide & Beyond Temples</h3>
-              <p className="temple-price">Starting at INR 8.95L</p>
-              <Link href="/dream-temples" className="btn btn-outline">View Details</Link>
-            </div>
-          </div>
-          <div className="temples-cta">
-            <Link href="/pricing" className="btn btn-secondary">Understand Pricing</Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-    <section className="stats fade-in-up">
-      <div className="container">
-        <div className="stats-grid">
-          <div className="stat-item">
-            <CountUpOnView end={500} />
-            <p>Completed Custom Projects</p>
-          </div>
-          <div className="stat-item">
-            <CountUpOnView end={50} />
-            <p>Cities</p>
-          </div>
-          <div className="stat-item">
-            <CountUpOnView end={15} />
-            <p>Years Experience</p>
-          </div>
+          ))}
         </div>
       </div>
-    </section>
 
-      {/* Catalog Section - Inspired by Osaanj */}
-      <section id="catalog" className="catalog-section fade-in-up">
+      {/* ── PRODUCTS ──────────────────────────────────────── */}
+      <section id="products" className="products-v2">
         <div className="container">
-          <h2>Explore Our Collections</h2>
-          <p className="section-subtitle">Download our comprehensive catalogs to discover our full range of divine creations</p>
-          <div className="catalog-grid">
-            <div className="catalog-card">
-              <div className="catalog-image">
-                <Image 
-                  src={landingPageImg} 
-                  alt="Pooja Rooms Catalog"
-                  width={400}
-                  height={500}
-                  placeholder="blur"
-                  sizes="(max-width: 1024px) 50vw, 400px"
-                />
-                <div className="catalog-overlay">
-                  <i className="fas fa-download"></i>
+          <div className="products-v2-header reveal">
+            <p className="eyebrow">What We Create</p>
+            <h2 className="products-v2-title">Our Signature Collections</h2>
+            <p className="products-v2-subtitle">
+              From sacred mandirs to striking surfaces — every piece made-to-measure, just for you.
+            </p>
+          </div>
+        </div>
+        <div className="products-v2-grid reveal">
+          {PRODUCTS.map((p) => (
+            <Link href="/contact" key={p.name} className="product-card-v2">
+              <div className="product-card-v2-img">
+                <Image src={p.image} alt={p.alt} fill sizes="(max-width: 768px) 100vw, 25vw" style={{ objectFit: 'cover' }} />
+              </div>
+              <div className="product-card-v2-overlay" />
+              <div className="product-card-v2-content">
+                <span className="product-card-v2-tag">{p.tag}</span>
+                <h3 className="product-card-v2-name">{p.name}</h3>
+                <p className="product-card-v2-desc">{p.desc}</p>
+                <div className="product-card-v2-arrow">
+                  <i className="fas fa-arrow-right"></i>
                 </div>
               </div>
-              <div className="catalog-info">
-                <h3>Pooja Rooms Collection</h3>
-                <p>Explore our premium pooja room designs</p>
-                <a href="#" className="btn btn-outline">Download Catalog</a>
-              </div>
-            </div>
-            <div className="catalog-card">
-              <div className="catalog-image">
-                <Image 
-                  src={heroTempleDesign} 
-                  alt="Dream Temples Catalog"
-                  width={400}
-                  height={500}
-                  placeholder="blur"
-                  sizes="(max-width: 1024px) 50vw, 400px"
-                />
-                <div className="catalog-overlay">
-                  <i className="fas fa-download"></i>
-                </div>
-              </div>
-              <div className="catalog-info">
-                <h3>Dream Temples Collection</h3>
-                <p>Browse our exquisite temple designs</p>
-                <a href="#" className="btn btn-outline">Download Catalog</a>
-              </div>
-            </div>
-            <div className="catalog-card">
-              <div className="catalog-image">
-                <Image 
-                  src={marbleCravingImg} 
-                  alt="Marble Works Catalog"
-                  width={400}
-                  height={500}
-                  placeholder="blur"
-                  sizes="(max-width: 1024px) 50vw, 400px"
-                />
-                <div className="catalog-overlay">
-                  <i className="fas fa-download"></i>
-                </div>
-              </div>
-              <div className="catalog-info">
-                <h3>Premium Marble Works</h3>
-                <p>Discover our finest marble craftsmanship</p>
-                <a href="#" className="btn btn-outline">Download Catalog</a>
-              </div>
-            </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ── MATERIALS ─────────────────────────────────────── */}
+      <section className="materials-section">
+        <div className="material-panel">
+          <div className="material-panel-bg">
+            <Image src={temple2LImg} alt="Corian Solid Surface" fill sizes="50vw" style={{ objectFit: 'cover' }} />
+          </div>
+          <div className="material-panel-overlay" />
+          <div className="material-panel-content reveal">
+            <span className="material-label">Material · 01</span>
+            <h2 className="material-title">Corian<br />Solid Surface</h2>
+            <p className="material-desc">
+              DuPont&apos;s premium solid surface — non-porous, seamless and thermoformable.
+              The choice for mandirs and panels that demand flawless, lasting beauty.
+            </p>
+            <ul className="material-features">
+              <li>Non-porous &amp; hygienic — ideal for sacred spaces</li>
+              <li>Seamless joins, zero visible grout lines</li>
+              <li>100+ colours, textures and finishes</li>
+              <li>Repairable, renewable, sustainable</li>
+            </ul>
+            <Link href="/contact" className="btn-gold">Enquire About Corian</Link>
+          </div>
+        </div>
+
+        <div className="material-panel">
+          <div className="material-panel-bg">
+            <Image src={stoneDesign1Img} alt="Natural & Engineered Stone" fill sizes="50vw" style={{ objectFit: 'cover' }} />
+          </div>
+          <div className="material-panel-overlay" />
+          <div className="material-panel-content reveal">
+            <span className="material-label">Material · 02</span>
+            <h2 className="material-title">Natural &amp;<br />Engineered Stone</h2>
+            <p className="material-desc">
+              Timeless marble, granite and engineered quartz with one-of-a-kind natural veining.
+              Each slab is a unique work of art — yours to own forever.
+            </p>
+            <ul className="material-features">
+              <li>Unique natural veining &amp; patterns</li>
+              <li>Exceptional hardness &amp; durability</li>
+              <li>Marble, granite, slate &amp; engineered quartz</li>
+              <li>Pan India sourcing &amp; installation</li>
+            </ul>
+            <Link href="/contact" className="btn-gold">Enquire About Stone</Link>
           </div>
         </div>
       </section>
 
-      {/* Clients Section - Enhanced */}
-      <section className="clients clients-enhanced fade-in-up">
+      {/* ── WHY US ────────────────────────────────────────── */}
+      <section className="why-us-v2">
         <div className="container">
-          <h2>Trusted by Families Across the Globe</h2>
-          <p className="section-subtitle">From luxury residences to heritage temples, our work speaks for itself</p>
-          <div className="client-categories">
-            <div className="category-section">
-              <h3>Residential Projects</h3>
-              <div className="clients-grid">
-                <div className="client-logo">
-                  <div className="client-placeholder">Luxury Villa - Mumbai</div>
-                </div>
-                <div className="client-logo">
-                  <div className="client-placeholder">Penthouse - Delhi</div>
-                </div>
-                <div className="client-logo">
-                  <div className="client-placeholder">Heritage Home - Jaipur</div>
-                </div>
-                <div className="client-logo">
-                  <div className="client-placeholder">Modern Apartment - Bangalore</div>
-                </div>
+          <div className="why-us-v2-header reveal">
+            <p className="eyebrow">Why Devasthanam</p>
+            <h2>Craftsmanship You Can Trust</h2>
+            <p className="products-v2-subtitle">
+              Built on 15+ years of experience and hundreds of delighted families across India.
+            </p>
+          </div>
+          <div className="why-us-v2-grid reveal">
+            {[
+              {
+                icon: 'fas fa-gem',
+                title: 'Premium Materials Only',
+                desc: 'We source the finest Corian solid surface and hand-selected natural stones. Material quality is never compromised.',
+              },
+              {
+                icon: 'fas fa-ruler-combined',
+                title: '100% Custom Made',
+                desc: 'Every piece is made-to-measure for your exact space. No standard sizes — pure bespoke craftsmanship.',
+              },
+              {
+                icon: 'fas fa-tools',
+                title: 'Expert Installation',
+                desc: 'Trained installation teams handle every project with precision, from Kolkata across Pan India.',
+              },
+              {
+                icon: 'fas fa-headset',
+                title: 'After-Sales Support',
+                desc: "Your satisfaction doesn't end at delivery. We provide dedicated after-sales support and warranty on all work.",
+              },
+            ].map((card) => (
+              <div key={card.title} className="why-card-v2">
+                <div className="why-card-icon"><i className={card.icon}></i></div>
+                <h3>{card.title}</h3>
+                <p>{card.desc}</p>
               </div>
-            </div>
-            <div className="category-section">
-              <h3>Institutional Projects</h3>
-              <div className="clients-grid">
-                <div className="client-logo">
-                  <div className="client-placeholder">Community Temple</div>
-                </div>
-                <div className="client-logo">
-                  <div className="client-placeholder">Ashram - Rishikesh</div>
-                </div>
-                <div className="client-logo">
-                  <div className="client-placeholder">Gurudwara - Amritsar</div>
-                </div>
-                <div className="client-logo">
-                  <div className="client-placeholder">Heritage Temple</div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="projects-showcase fade-in-up">
+      {/* ── PROCESS ───────────────────────────────────────── */}
+      <section className="process-v2">
         <div className="container">
-          <h2>Explore Our Projects</h2>
-          <div className="projects-grid">
-            <div className="project-card">
-              <Image 
-                src={stoneDesign1Img} 
-                alt="Luxury Pooja Room"
-                width={400}
-                height={300}
-                placeholder="blur"
-                sizes="(max-width: 1024px) 100vw, 400px"
-              />
-              <div className="project-overlay">
-                <h3>Luxury Pooja Room</h3>
-                <p>Mumbai Residence</p>
-              </div>
-            </div>
-            <div className="project-card">
-              <Image 
-                src={heroTempleDesign} 
-                alt="Dream Temple"
-                width={400}
-                height={300}
-                placeholder="blur"
-                sizes="(max-width: 1024px) 100vw, 400px"
-              />
-              <div className="project-overlay">
-                <h3>Grand Dream Temple</h3>
-                <p>Delhi Villa</p>
-              </div>
-            </div>
-            <div className="project-card">
-              <Image 
-                src={temple7LImg} 
-                alt="Communal Temple"
-                width={400}
-                height={300}
-                placeholder="blur"
-                sizes="(max-width: 1024px) 100vw, 400px"
-              />
-              <div className="project-overlay">
-                <h3>Community Temple</h3>
-                <p>Bangalore</p>
-              </div>
-            </div>
+          <div className="process-v2-header reveal">
+            <span className="eyebrow process-eyebrow">Our Process</span>
+            <h2>Crafted With Care, Every Step</h2>
+            <p>From your first call to the final installation — here&apos;s how we bring your vision to life.</p>
           </div>
-          <div className="projects-cta">
-            <Link href="/projects" className="btn btn-secondary">Explore all Projects</Link>
+          <div className="process-v2-steps reveal">
+            {PROCESS.map((step) => (
+              <div key={step.n} className="process-step-v2">
+                <div className="process-step-num">{step.n}</div>
+                <h3>{step.title}</h3>
+                <p>{step.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section id="testimonials" className="testimonials fade-in-up">
+      {/* ── GALLERY ───────────────────────────────────────── */}
+      <section id="projects" className="gallery-v2">
         <div className="container">
-          <h2>
-            <div className='d-flex'>
-              <div style={{ marginRight: '10px' }}>
-                <CountUpOnView end={1000} /> 
-              </div>
-              Happy Families
-            </div>
-          </h2>
-          <div className="testimonials-slider">
-            {testimonials.map((testimonial, index) => (
-              <div 
-                key={index} 
-                className="testimonial-card"
-                style={{
-                  opacity: index === currentTestimonial ? 1 : 0.5,
-                  transform: index === currentTestimonial ? 'scale(1)' : 'scale(0.95)'
-                }}
-              >
-                <div className="testimonial-content">
-                  <p>&quot;{testimonial.content}&quot;</p>
-                </div>
-                <div className="testimonial-author">
-                  <Image 
-                    src={testimonial.image} 
-                    alt={testimonial.author}
-                    width={60}
-                    height={60}
+          <div className="gallery-v2-header reveal">
+            <p className="eyebrow">Portfolio</p>
+            <h2>Our Work Speaks</h2>
+            <p className="products-v2-subtitle">A selection of projects completed across India — each one a testament to precision and craft.</p>
+          </div>
+          <div className="gallery-grid-v2 reveal">
+            {GALLERY.map((item, i) => (
+              <div key={i} className={`gallery-item-v2${item.featured ? ' featured' : ''}`}>
+                <div className="gallery-item-v2-inner">
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    sizes={item.featured ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 50vw, 33vw'}
+                    style={{ objectFit: 'cover' }}
+                    className="gallery-item-v2-img"
                   />
-                  <div className="author-info">
-                    <h4>{testimonial.author}</h4>
-                    <p>{testimonial.location}</p>
+                  <div className="gallery-item-v2-overlay">
+                    <div className="gallery-item-v2-info">
+                      <h4>{item.label}</h4>
+                      <span>{item.location}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -686,39 +345,176 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Contact Form Section */}
-      <section className="contact-form">
+      {/* ── TESTIMONIALS ──────────────────────────────────── */}
+      <section className="testimonials-v2">
         <div className="container">
-          <div className="form-content">
-            <div className="form-text">
-              <h2>Talk to Our Expert</h2>
-              <p>Get personalized consultation for your dream temple or pooja room</p>
-            </div>
-            <form className="consultation-form" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <input type="text" name="fullName" placeholder="Full Name *" required />
+          <div className="testimonials-v2-header reveal">
+            <p className="eyebrow process-eyebrow">Client Stories</p>
+            <h2 style={{ color: '#fff' }}>Trusted by Families Across India</h2>
+            <p style={{ color: 'rgba(255,255,255,0.6)', maxWidth: '460px', margin: '0 auto' }}>
+              Real words from real clients — because our work truly speaks for itself.
+            </p>
+          </div>
+          <div className="testimonials-v2-grid reveal">
+            {TESTIMONIALS.map((t, i) => (
+              <div key={i} className="testimonial-v2-card">
+                <span className="testimonial-v2-quote">&ldquo;</span>
+                <div className="testimonial-v2-stars">
+                  {[1, 2, 3, 4, 5].map((s) => <i key={s} className="fas fa-star"></i>)}
+                </div>
+                <p className="testimonial-v2-text">{t.text}</p>
+                <div className="testimonial-v2-author">
+                  <div className="testimonial-v2-avatar">
+                    <Image src={t.image} alt={t.name} width={50} height={50} style={{ objectFit: 'cover' }} />
+                  </div>
+                  <div>
+                    <p className="testimonial-v2-author-name">{t.name}</p>
+                    <p className="testimonial-v2-author-location">{t.location}</p>
+                  </div>
+                </div>
               </div>
-              <div className="form-group">
-                <input type="email" name="email" placeholder="Email Address *" required />
-              </div>
-              <div className="form-group">
-                <input type="tel" name="phone" placeholder="Phone number" />
-              </div>
-              <div className="form-group">
-                <input type="text" name="city" placeholder="City *" required />
-              </div>
-              <div className="form-group">
-                <select name="userType" required>
-                  <option value="">Tell us about yourself *</option>
-                  <option value="homeowner">I am a homeowner looking for a pooja unit or pooja room</option>
-                  <option value="designer">I am an interior designer/consultant seeking solutions for my client</option>
-                </select>
-              </div>
-              <button type="submit" className="btn btn-primary">Submit</button>
-            </form>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* ── STATS ─────────────────────────────────────────── */}
+      <section className="stats-v2">
+        <div className="container">
+          <div className="stats-v2-grid reveal">
+            <div className="stat-v2-item">
+              <CountUpOnView end={500} />
+              <p className="stat-v2-label">Projects Completed</p>
+              <p className="stat-v2-sub">Across India</p>
+            </div>
+            <div className="stat-v2-item">
+              <CountUpOnView end={15} />
+              <p className="stat-v2-label">Years of Excellence</p>
+              <p className="stat-v2-sub">Kolkata-based craftsmanship</p>
+            </div>
+            <div className="stat-v2-item">
+              <CountUpOnView end={50} />
+              <p className="stat-v2-label">Cities Served</p>
+              <p className="stat-v2-sub">Pan India delivery</p>
+            </div>
+            <div className="stat-v2-item">
+              <CountUpOnView end={100} suffix="%" />
+              <p className="stat-v2-label">Custom Made</p>
+              <p className="stat-v2-sub">Every single piece</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CONTACT CTA ───────────────────────────────────── */}
+      <section className="contact-cta-v2">
+        <div className="container">
+          <div className="contact-cta-v2-inner">
+            <div className="contact-cta-v2-text reveal">
+              <p className="eyebrow">Get In Touch</p>
+              <h2>Let&apos;s Create Something<br />Beautiful Together</h2>
+              <p>
+                Ready to transform your space with premium Corian or stone surfaces?
+                Our team guides you from concept to perfect completion.
+              </p>
+              <div className="contact-v2-info-items">
+                <div className="contact-v2-info-item">
+                  <div className="contact-v2-icon"><i className="fas fa-map-marker-alt"></i></div>
+                  <span>48, SN Roy Rd, New Alipore, Kolkata — 700038</span>
+                </div>
+                <div className="contact-v2-info-item">
+                  <div className="contact-v2-icon"><i className="fas fa-phone"></i></div>
+                  <a href="tel:+919007137413">+91 90071 37413</a>
+                </div>
+                <div className="contact-v2-info-item">
+                  <div className="contact-v2-icon"><i className="fas fa-envelope"></i></div>
+                  <a href="mailto:info@devasthanam.com">info@devasthanam.com</a>
+                </div>
+                <div className="contact-v2-info-item">
+                  <div className="contact-v2-icon"><i className="fab fa-whatsapp"></i></div>
+                  <a href="https://wa.me/919007137413" target="_blank" rel="noopener noreferrer">
+                    Chat on WhatsApp
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="contact-v2-form reveal">
+              <h3 style={{ marginBottom: '28px', color: 'var(--text-dark)', fontSize: '1.4rem' }}>Send Us an Enquiry</h3>
+              <form onSubmit={handleSubmit}>
+                <div className="contact-form-row">
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      placeholder="Your Name *"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <input
+                      type="tel"
+                      placeholder="Phone Number *"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <input
+                    type="email"
+                    placeholder="Email Address"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <select
+                    value={formData.service}
+                    onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                    required
+                  >
+                    <option value="">I&apos;m interested in... *</option>
+                    <option value="corian-mandir">Corian Mandir</option>
+                    <option value="wall-panels">Wall Panels</option>
+                    <option value="stone-panels">Stone Panels</option>
+                    <option value="table-tops">Table Tops</option>
+                    <option value="multiple">Multiple / Other</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <textarea
+                    placeholder="Tell us about your project, space and vision..."
+                    rows={4}
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    style={{ resize: 'vertical' }}
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '8px' }}>
+                  Send Enquiry &rarr;
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── WHATSAPP FLOAT ────────────────────────────────── */}
+      <div className="whatsapp-float">
+        <span className="whatsapp-tooltip">Chat on WhatsApp</span>
+        <a
+          href="https://wa.me/919007137413"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="whatsapp-float-btn"
+          aria-label="Chat on WhatsApp"
+        >
+          <i className="fab fa-whatsapp"></i>
+        </a>
+      </div>
     </>
   )
 }
