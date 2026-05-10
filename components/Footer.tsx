@@ -44,10 +44,10 @@ export default function Footer() {
           <div className="footer-v2-col">
             <h4>Our Products</h4>
             <ul>
-              <li><Link href="/contact">Corian Mandirs</Link></li>
-              <li><Link href="/contact">Wall Panels</Link></li>
-              <li><Link href="/contact">Stone Panels</Link></li>
-              <li><Link href="/contact">Table Tops</Link></li>
+              <li><Link href="/#products">Corian Mandirs</Link></li>
+              <li><Link href="/#products">Wall Panels</Link></li>
+              <li><Link href="/#products">Stone Panels</Link></li>
+              <li><Link href="/#products">Table Tops</Link></li>
               <li><Link href="/contact">Custom Projects</Link></li>
             </ul>
           </div>
@@ -59,8 +59,7 @@ export default function Footer() {
               <li><Link href="/about">About Us</Link></li>
               <li><Link href="/#projects">Gallery</Link></li>
               <li><Link href="/#projects">Our Projects</Link></li>
-              <li><Link href="/contact">Careers</Link></li>
-              <li><Link href="/contact">Collaborations</Link></li>
+              <li><Link href="/contact">Enquire / Collaborate</Link></li>
             </ul>
           </div>
 
@@ -90,9 +89,9 @@ export default function Footer() {
         <div className="footer-v2-bottom">
           <p>&copy; {new Date().getFullYear()} Devasthanam India. All rights reserved.</p>
           <div className="footer-v2-bottom-links">
-            <Link href="/contact">Privacy Policy</Link>
-            <Link href="/contact">Terms &amp; Conditions</Link>
-            <Link href="/contact">Disclaimer</Link>
+            <Link href="/privacy">Privacy Policy</Link>
+            <Link href="/terms">Terms &amp; Conditions</Link>
+            <Link href="/privacy#disclaimer">Disclaimer</Link>
           </div>
         </div>
       </div>

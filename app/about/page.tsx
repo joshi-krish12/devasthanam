@@ -1,176 +1,222 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState, useEffect, useRef } from 'react'
+import CountUpOnView from '@/components/CountUpOnView'
+import stoneDesign1Img from '@/public/stone-design1.png'
 
-export const metadata = {
-  title: 'About Us - Devasthanam',
-  description: 'Learn about Devasthanam\'s story, mission, and 15+ years of excellence in crafting premium marble temples and pooja rooms.',
-}
+// Real studio / product photography (string paths — served from /public)
+const imgShowroom      = '/c96cec35-7fd3-4116-b9eb-fe653ebbfd94.JPG'
+const imgMandirLarge   = '/IMG_0481.JPG'
+const imgStoneInstalled = '/59e67835-529b-4b94-a588-4e31f497ae32.JPG'
+const imgMandirArch2   = '/IMG_0482.JPG'
 
 export default function About() {
+  const revealRefs = useRef<(HTMLElement | null)[]>([])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible')
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+    revealRefs.current.forEach((el) => el && observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
+  const addRef = (el: HTMLElement | null) => {
+    if (el && !revealRefs.current.includes(el)) revealRefs.current.push(el)
+  }
+
   return (
     <>
-      {/* Page Header */}
-      <section className="page-header">
-        <div className="container">
-          <h1>About Devasthanam</h1>
-          <p>Crafting Sacred Spaces with Devotion and Excellence</p>
+      {/* ── Page Hero ── */}
+      <section className="about-hero-v2">
+        <div className="about-hero-v2-bg">
+          <Image
+            src={imgShowroom}
+            alt="Devasthanam studio showroom"
+            fill
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+            priority
+          />
+          <div className="about-hero-v2-overlay" />
+        </div>
+        <div className="about-hero-v2-content container">
+          <p className="about-hero-v2-eyebrow">Est. in Kolkata</p>
+          <h1 className="about-hero-v2-title">
+            Crafted with<br /><em>Material Mastery</em>
+          </h1>
+          <p className="about-hero-v2-sub">
+            15+ years of precision in Corian and stone — from sacred home mandirs to architectural wall panels and bespoke surfaces.
+          </p>
         </div>
       </section>
 
-      {/* About Content */}
-      <section className="about-content">
+      {/* ── Story Section ── */}
+      <section className="about-story-v2">
         <div className="container">
-          <div className="about-intro">
-            <div className="intro-text">
-              <h2>Our Story</h2>
-              <p>For over 15 years, Devasthanam has been at the forefront of creating exquisite marble temples and pooja rooms that blend traditional craftsmanship with contemporary design. Founded with a vision to bring divine beauty into every home, we have grown from a small artisan workshop to India&apos;s leading marble temple manufacturer.</p>
-              <p>Our journey began with a simple belief: every sacred space should be a masterpiece that inspires devotion and brings peace to the soul. Today, we have created over 500 custom temples across 50+ cities, touching the lives of thousands of families worldwide.</p>
+          <div className="about-story-v2-grid">
+            <div ref={addRef} className="about-story-v2-images reveal">
+              <div className="about-story-img-main">
+                <Image src={imgMandirLarge} alt="Large Corian Mandir by Devasthanam" fill style={{ objectFit: 'cover' }} />
+              </div>
+              <div className="about-story-img-accent">
+                <Image src={imgMandirArch2} alt="Ornate Corian Mandir detail" fill style={{ objectFit: 'cover' }} />
+              </div>
             </div>
-            <div className="intro-image">
-              <Image 
-                src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop" 
-                alt="Devasthanam Workshop"
-                width={600}
-                height={400}
-              />
+            <div ref={addRef} className="about-story-v2-text reveal" style={{ transitionDelay: '0.15s' }}>
+              <span className="section-eyebrow">Our Story</span>
+              <h2>Where Devotion Meets Design</h2>
+              <p>
+                Devasthanam was born in Kolkata from a singular conviction — that every sacred space and interior surface deserves the same attention a master sculptor gives to marble. We work exclusively with two material families: <strong>Corian solid surface</strong> and <strong>natural &amp; engineered stone</strong>.
+              </p>
+              <p>
+                Over the years we have moved beyond the traditional to build a practice that is as comfortable designing a seamless Corian home mandir as it is laying a dramatic stone feature wall for a luxury hotel lobby. Both demand precision. Both demand beauty that endures.
+              </p>
+              <p>
+                Based at 48 SN Roy Road, New Alipore, our studio and workshop are in Kolkata — serving clients across India and beyond.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Mission & Vision */}
-      <section className="mission-vision">
+      {/* ── Manifesto Quote ── */}
+      <section className="about-manifesto-v2">
         <div className="container">
-          <div className="mv-grid">
-            <div className="mv-card">
-              <div className="mv-icon">
-                <i className="fas fa-eye"></i>
-              </div>
-              <h3>Our Vision</h3>
-              <p>To be the world&apos;s most trusted name in marble temple craftsmanship, creating sacred spaces that inspire spiritual connection and bring families together in devotion.</p>
+          <blockquote ref={addRef} className="about-manifesto-quote reveal">
+            <span className="manifesto-mark">&ldquo;</span>
+            <p>Material is memory. Corian remembers the seamlessness of pure form. Stone remembers the earth. We remember both.</p>
+            <cite>— The Devasthanam Studio</cite>
+          </blockquote>
+        </div>
+      </section>
+
+      {/* ── Materials We Work With ── */}
+      <section className="about-materials-v2">
+        <div className="about-materials-v2-grid">
+          <div className="about-material-panel about-material-corian">
+            <Image src={imgMandirLarge} alt="Corian Surface" fill style={{ objectFit: 'cover' }} />
+            <div className="about-material-overlay" />
+            <div ref={addRef} className="about-material-content reveal">
+              <span className="about-material-tag">Solid Surface</span>
+              <h3>Corian</h3>
+              <p>Non-porous, seamlessly thermoformed, endlessly repairable. The material of choice for mandirs, counters, and wall cladding where hygiene and elegance must coexist.</p>
+              <ul>
+                <li>Hygienic &amp; non-porous</li>
+                <li>Invisible joins</li>
+                <li>Renewable surface</li>
+                <li>600+ colour options</li>
+              </ul>
             </div>
-            <div className="mv-card">
-              <div className="mv-icon">
-                <i className="fas fa-heart"></i>
-              </div>
-              <h3>Our Mission</h3>
-              <p>To preserve and elevate the ancient art of marble carving while making divine craftsmanship accessible to every home through innovative design and exceptional service.</p>
-            </div>
-            <div className="mv-card">
-              <div className="mv-icon">
-                <i className="fas fa-gem"></i>
-              </div>
-              <h3>Our Values</h3>
-              <p>Excellence in craftsmanship, integrity in business, devotion to tradition, innovation in design, and unwavering commitment to customer satisfaction.</p>
+          </div>
+          <div className="about-material-panel about-material-stone">
+            <Image src={imgStoneInstalled} alt="Natural Stone Surface Installed" fill style={{ objectFit: 'cover' }} />
+            <div className="about-material-overlay" />
+            <div ref={addRef} className="about-material-content reveal" style={{ transitionDelay: '0.12s' }}>
+              <span className="about-material-tag">Natural &amp; Engineered</span>
+              <h3>Stone</h3>
+              <p>Marble, granite, quartzite, and engineered quartz — selected for their veining, density and finish. Every slab is unique; every installation, permanent.</p>
+              <ul>
+                <li>Marble, granite, quartz</li>
+                <li>Unique natural patterns</li>
+                <li>Polished or honed finish</li>
+                <li>Architectural grade</li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="why-choose-us">
+      {/* ── Values ── */}
+      <section className="about-values-v2">
         <div className="container">
-          <h2>Why Choose Devasthanam?</h2>
-          <div className="features-grid">
-            <div className="feature-card">
-              <div className="feature-icon">
-                <i className="fas fa-hammer"></i>
+          <div ref={addRef} className="about-values-v2-header reveal">
+            <span className="section-eyebrow">What Drives Us</span>
+            <h2>Our Principles</h2>
+          </div>
+          <div className="about-values-v2-grid">
+            {[
+              {
+                icon: 'fas fa-drafting-compass',
+                title: 'Precision First',
+                desc: 'Every cut, join, and finish is measured to fractions of a millimetre. We do not approximate.',
+              },
+              {
+                icon: 'fas fa-leaf',
+                title: 'Material Integrity',
+                desc: 'We source Corian through authorised channels and stone from vetted quarries — quality starts before the studio.',
+              },
+              {
+                icon: 'fas fa-pencil-ruler',
+                title: 'Bespoke Always',
+                desc: 'No catalogue pieces. Every project begins with your space, your brief, your proportions.',
+              },
+              {
+                icon: 'fas fa-handshake',
+                title: 'End-to-End',
+                desc: 'Design, fabrication, delivery, and installation — one team, one accountability, zero handoff gaps.',
+              },
+            ].map((v, i) => (
+              <div
+                key={v.title}
+                ref={addRef}
+                className="about-value-card reveal"
+                style={{ transitionDelay: `${i * 0.1}s` }}
+              >
+                <div className="about-value-icon">
+                  <i className={v.icon}></i>
+                </div>
+                <h4>{v.title}</h4>
+                <p>{v.desc}</p>
               </div>
-              <div>
-                <h3>Master Craftsmanship</h3>
-                <p>Our skilled artisans have honed their craft over generations, ensuring every temple is a work of art that stands the test of time.</p>
-              </div>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">
-                <i className="fas fa-palette"></i>
-              </div>
-              <div>
-                <h3>Custom Design</h3>
-                <p>Every temple is uniquely designed to match your space, preferences, and spiritual requirements, creating a truly personalized sacred space.</p>
-              </div>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">
-                <i className="fas fa-gem"></i>
-              </div>
-              <div>
-                <h3>Premium Materials</h3>
-                <p>We source only the finest marble from renowned quarries, ensuring durability, beauty, and spiritual purity in every creation.</p>
-              </div>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">
-                <i className="fas fa-tools"></i>
-              </div>
-              <div>
-                <h3>Complete Service</h3>
-                <p>From initial consultation to final installation, we provide end-to-end service with professional project management and support.</p>
-              </div>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">
-                <i className="fas fa-globe"></i>
-              </div>
-              <div>
-                <h3>Global Reach</h3>
-                <p>With installations across India and internationally, we bring our expertise to devotees worldwide while maintaining local cultural sensitivity.</p>
-              </div>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">
-                <i className="fas fa-shield-alt"></i>
-              </div>
-              <div>
-                <h3>Quality Assurance</h3>
-                <p>Every temple comes with comprehensive warranty and after-sales support, ensuring your investment is protected for years to come.</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Company Stats */}
-      <section className="company-stats">
+      {/* ── Stats ── */}
+      <section className="about-stats-v2">
         <div className="container">
-          <div className="stats-grid">
-            <div className="stat-item">
-              <h3>500+</h3>
-              <p>Temples Created</p>
+          <div className="about-stats-v2-grid">
+            <div className="about-stat-item">
+              <CountUpOnView end={500} suffix="+" duration={2200} />
+              <p>Projects Completed</p>
             </div>
-            <div className="stat-item">
-              <h3>50+</h3>
+            <div className="about-stat-item">
+              <CountUpOnView end={15} suffix="+" duration={1800} />
+              <p>Years of Expertise</p>
+            </div>
+            <div className="about-stat-item">
+              <CountUpOnView end={50} suffix="+" duration={2000} />
               <p>Cities Served</p>
             </div>
-            <div className="stat-item">
-              <h3>15+</h3>
-              <p>Years of Excellence</p>
-            </div>
-            <div className="stat-item">
-              <h3>1000+</h3>
-              <p>Happy Families</p>
-            </div>
-            <div className="stat-item">
-              <h3>25+</h3>
-              <p>Master Artisans</p>
-            </div>
-            <div className="stat-item">
-              <h3>10+</h3>
-              <p>Countries Served</p>
+            <div className="about-stat-item">
+              <CountUpOnView end={100} suffix="%" duration={1600} />
+              <p>Satisfaction Guaranteed</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="cta-section">
+      {/* ── CTA ── */}
+      <section className="about-cta-v2">
         <div className="container">
-          <div className="cta-content">
-            <h2>Ready to Create Your Sacred Space?</h2>
-            <p>Let our master craftsmen bring your vision to life with a custom marble temple that reflects your devotion and enhances your spiritual journey.</p>
-            <div className="cta-buttons">
-              <Link href="/contact" className="btn btn-primary">Start Your Journey</Link>
-              <Link href="/virtual-tour" className="btn btn-secondary">Take Virtual Tour</Link>
+          <div ref={addRef} className="about-cta-v2-inner reveal">
+            <h2>Let&apos;s Build Something Extraordinary</h2>
+            <p>Whether you are a homeowner with a vision or an interior designer seeking a trusted fabrication partner — we are ready.</p>
+            <div className="about-cta-v2-btns">
+              <Link href="/contact" className="btn-gold">Book a Consultation</Link>
+              <a href="https://wa.me/919007137413" target="_blank" rel="noopener noreferrer" className="btn-ghost-dark">
+                <i className="fab fa-whatsapp" style={{ marginRight: 8 }}></i>WhatsApp Us
+              </a>
             </div>
           </div>
         </div>

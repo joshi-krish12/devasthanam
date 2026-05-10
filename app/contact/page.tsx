@@ -1,335 +1,299 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
+
+const FAQS = [
+  {
+    q: 'How long does it take to complete a Corian mandir?',
+    a: 'A standard home mandir takes 3–5 weeks from design sign-off to installation. Larger or more intricate pieces may take 6–8 weeks. We provide a detailed timeline during consultation.',
+  },
+  {
+    q: 'Do you work with interior designers and architects?',
+    a: 'Absolutely — a significant portion of our projects are B2B collaborations. We are comfortable working from technical drawings, providing material samples, and meeting project-site timelines.',
+  },
+  {
+    q: 'What is the difference between Corian and stone for a mandir?',
+    a: 'Corian is non-porous, seamless (no visible joints), and repairable — ideal for hygiene-sensitive sacred spaces. Natural stone carries the beauty of unique veining and a natural feel but requires sealing. We help you choose based on your aesthetic and maintenance preferences.',
+  },
+  {
+    q: 'Do you provide installation across India?',
+    a: 'Yes. While our studio is in Kolkata, we execute installations across India. Logistics and installation costs vary by location — we quote this transparently during consultation.',
+  },
+  {
+    q: 'Can I visit your studio to see samples?',
+    a: 'Yes — we welcome visits to our studio at 48 SN Roy Road, New Alipore, Kolkata. You can view material samples, finished pieces, and discuss your project with our design team.',
+  },
+  {
+    q: 'What warranty do you offer?',
+    a: 'All our work comes with a 1-year craftsmanship warranty. Corian installations backed by the material manufacturer warranty. We remain available for after-care beyond warranty as well.',
+  },
+]
 
 export default function Contact() {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
     phone: '',
-    city: '',
-    budget: '',
-    projectType: '',
+    productType: '',
     userType: '',
-    timeline: '',
-    spaceSize: '',
     message: '',
-    newsletter: false,
-    terms: false
+    terms: false,
   })
+  const [submitted, setSubmitted] = useState(false)
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { name, value, type } = e.target
     if (type === 'checkbox') {
-      const checked = (e.target as HTMLInputElement).checked
-      setFormData(prev => ({ ...prev, [name]: checked }))
+      setFormData((prev) => ({ ...prev, [name]: (e.target as HTMLInputElement).checked }))
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }))
+      setFormData((prev) => ({ ...prev, [name]: value }))
     }
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    
-    // Basic validation
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.city || !formData.projectType || !formData.userType || !formData.message) {
+    if (!formData.name || !formData.email || !formData.phone || !formData.productType || !formData.message) {
       alert('Please fill in all required fields.')
       return
     }
-
     if (!formData.terms) {
       alert('Please agree to the Terms & Conditions.')
       return
     }
-
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(formData.email)) {
       alert('Please enter a valid email address.')
       return
     }
-
-    alert('Thank you for your inquiry! Our team will contact you within 24 hours.')
-    
-    // Reset form
-    setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      city: '',
-      budget: '',
-      projectType: '',
-      userType: '',
-      timeline: '',
-      spaceSize: '',
-      message: '',
-      newsletter: false,
-      terms: false
-    })
+    setSubmitted(true)
   }
 
   return (
     <>
-      {/* Page Header */}
-      <section className="page-header">
+      {/* ── Page Hero ── */}
+      <section className="contact-hero-v2">
         <div className="container">
-          <h1>Contact Us</h1>
-          <p>Let&apos;s Create Your Dream Sacred Space Together</p>
+          <span className="section-eyebrow" style={{ color: 'var(--secondary-color)' }}>Get in Touch</span>
+          <h1 className="contact-hero-v2-title">
+            Start Your<br /><em>Conversation</em>
+          </h1>
+          <p className="contact-hero-v2-sub">
+            Tell us about your project — we will listen, advise, and build something you will love for years.
+          </p>
         </div>
       </section>
 
-      {/* Contact Information */}
-      <section className="contact-info-section">
+      {/* ── Contact Grid ── */}
+      <section className="contact-main-v2">
         <div className="container">
-          <div className="contact-grid">
-            <div className="contact-card">
-              <div className="contact-icon">
-                <i className="fas fa-map-marker-alt"></i>
+          <div className="contact-main-v2-grid">
+            {/* Left — Info */}
+            <div className="contact-info-v2">
+              <h2>Reach Us</h2>
+              <div className="contact-info-v2-items">
+                <div className="contact-info-v2-item">
+                  <div className="contact-info-v2-icon">
+                    <i className="fas fa-map-marker-alt"></i>
+                  </div>
+                  <div>
+                    <h4>Studio &amp; Workshop</h4>
+                    <p>48, SN Roy Road, New Alipore<br />Kolkata, West Bengal — 700038</p>
+                    <a
+                      href="https://maps.google.com/?q=48+SN+Roy+Rd+Kolkata"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="contact-info-v2-link"
+                    >
+                      Get Directions <i className="fas fa-arrow-right"></i>
+                    </a>
+                  </div>
+                </div>
+                <div className="contact-info-v2-item">
+                  <div className="contact-info-v2-icon">
+                    <i className="fas fa-phone"></i>
+                  </div>
+                  <div>
+                    <h4>Phone</h4>
+                    <p><a href="tel:+919007137413">+91 90071 37413</a></p>
+                    <p className="contact-info-v2-hours">Mon–Sat, 10 AM – 7 PM</p>
+                  </div>
+                </div>
+                <div className="contact-info-v2-item">
+                  <div className="contact-info-v2-icon">
+                    <i className="fas fa-envelope"></i>
+                  </div>
+                  <div>
+                    <h4>Email</h4>
+                    <p><a href="mailto:info@devasthanam.com">info@devasthanam.com</a></p>
+                  </div>
+                </div>
+                <div className="contact-info-v2-item">
+                  <div className="contact-info-v2-icon">
+                    <i className="fab fa-whatsapp"></i>
+                  </div>
+                  <div>
+                    <h4>WhatsApp</h4>
+                    <a
+                      href="https://wa.me/919007137413"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-gold"
+                      style={{ marginTop: 8, display: 'inline-block' }}
+                    >
+                      Chat Now
+                    </a>
+                  </div>
+                </div>
               </div>
-              <h3>Visit Our Showroom</h3>
-              <p>First & Second Floor, Devasthanam India<br/>
-              Mall 21, Mirza Ismail Road<br/>
-              Opposite Rajmandir Cinema, 5 Batti<br/>
-              C Scheme, Jaipur, Rajasthan 302001</p>
             </div>
-            <div className="contact-card">
-              <div className="contact-icon">
-                <i className="fas fa-phone"></i>
-              </div>
-              <h3>Call Us</h3>
-              <p><a href="tel:+919319374633">+91 93193 74633</a><br/>
-              <a href="tel:+911412345678">+91 141 234 5678</a><br/>
-              Mon - Sat: 10:00 AM - 7:00 PM<br/>
-              Sunday: 11:00 AM - 6:00 PM</p>
-            </div>
-            <div className="contact-card">
-              <div className="contact-icon">
-                <i className="fas fa-envelope"></i>
-              </div>
-              <h3>Email Us</h3>
-              <p><a href="mailto:info@devasthanam.com">info@devasthanam.com</a><br/>
-              <a href="mailto:sales@devasthanam.com">sales@devasthanam.com</a><br/>
-              <a href="mailto:support@devasthanam.com">support@devasthanam.com</a></p>
-            </div>
-            <div className="contact-card">
-              <div className="contact-icon">
-                <i className="fas fa-clock"></i>
-              </div>
-              <h3>Business Hours</h3>
-              <p>Monday - Friday: 9:00 AM - 8:00 PM<br/>
-              Saturday: 10:00 AM - 7:00 PM<br/>
-              Sunday: 11:00 AM - 6:00 PM<br/>
-              <em>Appointments available outside hours</em></p>
+
+            {/* Right — Form */}
+            <div className="contact-form-v2-wrap">
+              {submitted ? (
+                <div className="contact-success-v2">
+                  <div className="contact-success-icon">
+                    <i className="fas fa-check-circle"></i>
+                  </div>
+                  <h3>Thank you!</h3>
+                  <p>Your inquiry has been received. Our team will get back to you within 24 hours.</p>
+                  <a href="https://wa.me/919007137413" target="_blank" rel="noopener noreferrer" className="btn-gold" style={{ marginTop: 24, display: 'inline-block' }}>
+                    Or WhatsApp Us Directly
+                  </a>
+                </div>
+              ) : (
+                <form className="contact-form-v2" onSubmit={handleSubmit}>
+                  <h3>Request a Free Consultation</h3>
+                  <div className="cfv2-row">
+                    <div className="cfv2-group">
+                      <label htmlFor="name">Full Name *</label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Your name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="cfv2-group">
+                      <label htmlFor="phone">Phone *</label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="+91 XXXXX XXXXX"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="cfv2-group">
+                    <label htmlFor="email">Email Address *</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="you@example.com"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="cfv2-row">
+                    <div className="cfv2-group">
+                      <label htmlFor="productType">Product Interest *</label>
+                      <select id="productType" name="productType" value={formData.productType} onChange={handleChange} required>
+                        <option value="">Select a product</option>
+                        <option value="corian-mandir">Corian Mandir</option>
+                        <option value="wall-panels">Wall Panels</option>
+                        <option value="stone-panels">Stone Panels</option>
+                        <option value="table-tops">Table Tops</option>
+                        <option value="custom">Custom / Multiple Products</option>
+                      </select>
+                    </div>
+                    <div className="cfv2-group">
+                      <label htmlFor="userType">I am a</label>
+                      <select id="userType" name="userType" value={formData.userType} onChange={handleChange}>
+                        <option value="">Select</option>
+                        <option value="homeowner">Homeowner</option>
+                        <option value="designer">Interior Designer</option>
+                        <option value="architect">Architect</option>
+                        <option value="builder">Builder / Developer</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="cfv2-group">
+                    <label htmlFor="message">Tell us about your project *</label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={4}
+                      placeholder="Describe your space, dimensions, material preference, or any specific ideas..."
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="cfv2-group cfv2-check">
+                    <label className="cfv2-check-label">
+                      <input type="checkbox" name="terms" checked={formData.terms} onChange={handleChange} required />
+                      <span>I agree to the <Link href="/contact">Terms &amp; Conditions</Link> and Privacy Policy</span>
+                    </label>
+                  </div>
+                  <button type="submit" className="btn-gold cfv2-submit">Send Inquiry</button>
+                </form>
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Contact Form Section */}
-      <section className="contact-form-section">
+      {/* ── FAQ ── */}
+      <section className="faq-v2">
         <div className="container">
-          <div className="form-container">
-            <div className="form-header">
-              <h2>Get Your Free Consultation</h2>
-              <p>Share your vision with us and let our experts guide you through creating the perfect sacred space for your home.</p>
-            </div>
-            
-            <form className="contact-form" onSubmit={handleSubmit}>
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="firstName">First Name *</label>
-                  <input 
-                    type="text" 
-                    id="firstName" 
-                    name="firstName" 
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    required 
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="lastName">Last Name *</label>
-                  <input 
-                    type="text" 
-                    id="lastName" 
-                    name="lastName" 
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    required 
-                  />
+          <div className="faq-v2-header">
+            <span className="section-eyebrow">Frequently Asked</span>
+            <h2>Questions</h2>
+          </div>
+          <div className="faq-v2-list">
+            {FAQS.map((faq, i) => (
+              <div key={i} className={`faq-v2-item ${openFaq === i ? 'open' : ''}`}>
+                <button className="faq-v2-q" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+                  <span>{faq.q}</span>
+                  <i className={`fas fa-chevron-${openFaq === i ? 'up' : 'down'}`}></i>
+                </button>
+                <div className="faq-v2-a">
+                  <p>{faq.a}</p>
                 </div>
               </div>
-              
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="email">Email Address *</label>
-                  <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    value={formData.email}
-                    onChange={handleChange}
-                    required 
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="phone">Phone Number *</label>
-                  <input 
-                    type="tel" 
-                    id="phone" 
-                    name="phone" 
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required 
-                  />
-                </div>
-              </div>
-              
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="city">City *</label>
-                  <input 
-                    type="text" 
-                    id="city" 
-                    name="city" 
-                    value={formData.city}
-                    onChange={handleChange}
-                    required 
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="budget">Budget Range</label>
-                  <select 
-                    id="budget" 
-                    name="budget"
-                    value={formData.budget}
-                    onChange={handleChange}
-                  >
-                    <option value="">Select Budget Range</option>
-                    <option value="10-15L">₹10L - ₹15L</option>
-                    <option value="15-25L">₹15L - ₹25L</option>
-                    <option value="25-35L">₹25L - ₹35L</option>
-                    <option value="35L+">₹35L+</option>
-                    <option value="custom">Custom Budget</option>
-                  </select>
-                </div>
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="projectType">Project Type *</label>
-                <select 
-                  id="projectType" 
-                  name="projectType"
-                  value={formData.projectType}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Select Project Type</option>
-                  <option value="pooja-room">Pooja Room</option>
-                  <option value="dream-temple">Dream Temple</option>
-                  <option value="communal-temple">Communal Temple</option>
-                  <option value="jain-temple">Jain Temple</option>
-                  <option value="home-decor">Home Decor</option>
-                  <option value="murti">Murti</option>
-                  <option value="consultation">General Consultation</option>
-                </select>
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="userType">I am a *</label>
-                <select 
-                  id="userType" 
-                  name="userType"
-                  value={formData.userType}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Select User Type</option>
-                  <option value="homeowner">Homeowner looking for a pooja unit or pooja room</option>
-                  <option value="designer">Interior designer/consultant seeking solutions for my client</option>
-                  <option value="builder">Builder/Developer</option>
-                  <option value="architect">Architect</option>
-                </select>
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="message">Tell us about your vision *</label>
-                <textarea 
-                  id="message" 
-                  name="message" 
-                  rows={5} 
-                  placeholder="Describe your dream sacred space, preferred style, specific requirements, or any questions you have..."
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              
-              <div className="form-group checkbox-group">
-                <label className="checkbox-label">
-                  <input 
-                    type="checkbox" 
-                    id="newsletter" 
-                    name="newsletter"
-                    checked={formData.newsletter}
-                    onChange={handleChange}
-                  />
-                  <span className="checkmark"></span>
-                  Subscribe to our newsletter for design inspiration and updates
-                </label>
-              </div>
-              
-              <div className="form-group checkbox-group">
-                <label className="checkbox-label">
-                  <input 
-                    type="checkbox" 
-                    id="terms" 
-                    name="terms"
-                    checked={formData.terms}
-                    onChange={handleChange}
-                    required
-                  />
-                  <span className="checkmark"></span>
-                  I agree to the Terms & Conditions and Privacy Policy *
-                </label>
-              </div>
-              
-              <button type="submit" className="btn btn-primary btn-large">Submit Inquiry</button>
-            </form>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="faq-section">
+      {/* ── Map / Address Bar ── */}
+      <section className="contact-address-bar-v2">
         <div className="container">
-          <h2>Frequently Asked Questions</h2>
-          <div className="faq-grid">
-            <div className="faq-item">
-              <h3>How long does it take to complete a pooja room?</h3>
-              <p>Typically, our pooja rooms take 4-8 weeks to complete, depending on the complexity of design and customization requirements. We provide detailed timelines during consultation.</p>
+          <div className="contact-address-bar-v2-inner">
+            <div className="cab-item">
+              <i className="fas fa-map-marker-alt"></i>
+              <span>48, SN Roy Road, New Alipore, Kolkata 700038</span>
             </div>
-            <div className="faq-item">
-              <h3>Do you provide installation services?</h3>
-              <p>Yes, we provide complete installation services with our expert team. Installation is included in all our packages and comes with warranty coverage.</p>
+            <div className="cab-divider" />
+            <div className="cab-item">
+              <i className="fas fa-phone"></i>
+              <a href="tel:+919007137413">+91 90071 37413</a>
             </div>
-            <div className="faq-item">
-              <h3>Can you work with my interior designer?</h3>
-              <p>Absolutely! We collaborate closely with interior designers and architects to ensure seamless integration with your overall home design.</p>
-            </div>
-            <div className="faq-item">
-              <h3>What warranty do you provide?</h3>
-              <p>We provide comprehensive warranty ranging from 1-5 years depending on the package. This covers craftsmanship, materials, and installation quality.</p>
-            </div>
-            <div className="faq-item">
-              <h3>Do you ship internationally?</h3>
-              <p>Yes, we serve clients globally through Devasthanam International. We handle all shipping, customs, and installation coordination for international projects.</p>
-            </div>
-            <div className="faq-item">
-              <h3>Can I see samples before ordering?</h3>
-              <p>Yes, you can visit our experience centre to see samples, or we can arrange for sample delivery for serious inquiries. Virtual tours are also available.</p>
+            <div className="cab-divider" />
+            <div className="cab-item">
+              <i className="fas fa-clock"></i>
+              <span>Mon–Sat &nbsp;10 AM – 7 PM</span>
             </div>
           </div>
         </div>
