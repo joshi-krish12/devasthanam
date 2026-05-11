@@ -5,34 +5,45 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import CountUpOnView from '@/components/CountUpOnView'
 import landingPageImg from '@/public/landing page.png'
-import heroTempleDesign from '@/public/temple design.png'
-import marbleCarvingImg from '@/public/marble-craving.png'
-import stoneDesign1Img from '@/public/stone-design1.png'
 import temple2LImg from '@/public/temple-2L.png'
 import temple3LImg from '@/public/temple-3L.png'
 import temple5LImg from '@/public/temple-5L.png'
 import temple7LImg from '@/public/temple-7L.png'
+import stoneDesign1Img from '@/public/stone-design1.png'
+import heroTempleDesign from '@/public/temple design.png'
+import marbleCarvingImg from '@/public/marble-craving.png'
+import Lightbox from '@/components/Lightbox'
+// Real product photography (string paths — served from /public)
+const imgMandirGold        = '/3a061ab1-6c2f-4b58-ba74-5dd272186ae9.JPG'
+const imgWallPanel         = '/IMG_0486.JPG'
+const imgStoneInstalled    = '/59e67835-529b-4b94-a588-4e31f497ae32.JPG'
+const imgShowroom          = '/c96cec35-7fd3-4116-b9eb-fe653ebbfd94.JPG'
+const imgMandirBacklit     = '/2b612184-fed7-4bf1-a567-70e942bc4c47.JPG'
+const imgMandirArch        = '/8cd93079-08b1-4f93-8fe9-14343ea343ce.JPG'
+const imgMandirPeacock     = '/bccf36b9-306a-4db9-9815-2f74dec9e86b.JPG'
+const imgMandirLarge       = '/IMG_0481.JPG'
+const imgMandirGoldInterior = '/IMG_2059.jpeg'
 
 const PRODUCTS = [
   {
     tag: 'Sacred Spaces',
     name: 'Corian Mandirs',
     desc: 'Seamless, non-porous Corian solid surface crafted into exquisite home mandirs — hygienic, timeless, and utterly divine.',
-    image: heroTempleDesign,
+    image: imgMandirGold,
     alt: 'Corian Mandir by Devasthanam',
   },
   {
     tag: 'Interior Surfaces',
     name: 'Wall Panels',
     desc: 'Decorative Corian and stone wall panels that transform interiors with rich textures and architectural elegance.',
-    image: marbleCarvingImg,
+    image: imgWallPanel,
     alt: 'Wall Panels by Devasthanam',
   },
   {
     tag: 'Natural Stone',
     name: 'Stone Panels',
     desc: 'Premium natural and engineered stone panels — marble, granite, and quartz — for walls, floors, and feature walls.',
-    image: stoneDesign1Img,
+    image: imgStoneInstalled,
     alt: 'Stone Panels by Devasthanam',
   },
   {
@@ -66,12 +77,23 @@ const TESTIMONIALS = [
 ]
 
 const GALLERY = [
-  { src: stoneDesign1Img, alt: 'Stone Panel Installation', label: 'Stone Panels', location: 'Kolkata Villa', featured: true },
-  { src: heroTempleDesign, alt: 'Corian Mandir', label: 'Corian Mandir', location: 'Residential Project' },
-  { src: marbleCarvingImg, alt: 'Wall Panel', label: 'Wall Panels', location: 'Corporate Office' },
-  { src: temple3LImg, alt: 'Custom Mandir', label: 'Corian Mandir', location: 'Delhi Residence' },
-  { src: temple5LImg, alt: 'Temple Design', label: 'Corian Mandir', location: 'Mumbai Penthouse' },
-  { src: temple2LImg, alt: 'Stone Table Top', label: 'Table Tops', location: 'Kolkata Restaurant' },
+  // Real studio photos
+  { src: imgShowroom,           alt: 'Devasthanam Studio — two mandirs on display',   label: 'Studio Showcase',   location: 'Kolkata Showroom',    featured: true },
+  { src: imgMandirBacklit,      alt: 'Backlit Corian Mandir with OM motif',           label: 'Corian Mandir',     location: 'Residential, Kolkata' },
+  { src: imgMandirPeacock,      alt: 'Peacock feather OM Corian Mandir',              label: 'Corian Mandir',     location: 'Client Home, Kolkata' },
+  { src: imgStoneInstalled,     alt: 'Stone panel with peacock art, installed',        label: 'Stone Panels',      location: 'Luxury Apartment'     },
+  { src: imgMandirGold,         alt: 'Gold ornate Corian Mandir',                      label: 'Corian Mandir',     location: 'Showroom Display'     },
+  { src: imgMandirArch,         alt: 'Large arch Corian Mandir with deity',            label: 'Corian Mandir',     location: 'Community Space'      },
+  { src: imgWallPanel,          alt: 'Corian wall panel with floral relief carvings',  label: 'Wall Panels',       location: 'Residential, Kolkata' },
+  { src: imgMandirLarge,        alt: 'Large white ornate Corian Mandir',               label: 'Corian Mandir',     location: 'Home Installation'    },
+  { src: imgMandirGoldInterior, alt: 'Gold illuminated Corian Mandir interior',        label: 'Corian Mandir',     location: 'Premium Residence'    },
+  // Design & render portfolio
+  { src: stoneDesign1Img,       alt: 'Stone panel design',                             label: 'Stone Panels',      location: 'Design Portfolio'     },
+  { src: heroTempleDesign,      alt: 'Corian Mandir design render',                    label: 'Corian Mandir',     location: 'Design Portfolio'     },
+  { src: marbleCarvingImg,      alt: 'Marble carving wall panel',                      label: 'Wall Panels',       location: 'Design Portfolio'     },
+  { src: temple3LImg,           alt: 'Corian Mandir 3L design',                        label: 'Corian Mandir',     location: 'Design Portfolio'     },
+  { src: temple5LImg,           alt: 'Corian Mandir 5L design',                        label: 'Corian Mandir',     location: 'Design Portfolio'     },
+  { src: temple2LImg,           alt: 'Corian Mandir 2L design',                        label: 'Corian Mandir',     location: 'Design Portfolio'     },
 ]
 
 const TICKER = [
@@ -89,7 +111,10 @@ const PROCESS = [
 
 export default function Home() {
   const [loading, setLoading] = useState(true)
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', service: '', message: '' })
+  const [formSubmitting, setFormSubmitting] = useState(false)
+  const [formSubmitted, setFormSubmitted] = useState(false)
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 1600)
@@ -106,10 +131,36 @@ export default function Home() {
     }
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    alert('Thank you! Our team will reach out within 24 hours.')
-    setFormData({ name: '', phone: '', email: '', service: '', message: '' })
+    setFormSubmitting(true)
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: 'ffb4b26f-218a-4cfd-bdb5-042c33b095ff',
+          subject: `New Enquiry from ${formData.name}${formData.service ? ` — ${formData.service}` : ''}`,
+          from_name: 'Devasthanam Website',
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          'Product Interest': formData.service || 'Not specified',
+          message: formData.message,
+        }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setFormSubmitted(true)
+        setFormData({ name: '', phone: '', email: '', service: '', message: '' })
+      } else {
+        alert('Something went wrong. Please try again or WhatsApp us directly.')
+      }
+    } catch {
+      alert('Network error. Please WhatsApp us directly at +91 90071 37413.')
+    } finally {
+      setFormSubmitting(false)
+    }
   }
 
   return (
@@ -206,7 +257,7 @@ export default function Home() {
       <section className="materials-section">
         <div className="material-panel">
           <div className="material-panel-bg">
-            <Image src={temple2LImg} alt="Corian Solid Surface" fill sizes="50vw" style={{ objectFit: 'cover' }} />
+            <Image src={imgMandirArch} alt="Corian Solid Surface" fill sizes="50vw" style={{ objectFit: 'cover' }} />
           </div>
           <div className="material-panel-overlay" />
           <div className="material-panel-content reveal">
@@ -228,7 +279,7 @@ export default function Home() {
 
         <div className="material-panel">
           <div className="material-panel-bg">
-            <Image src={stoneDesign1Img} alt="Natural & Engineered Stone" fill sizes="50vw" style={{ objectFit: 'cover' }} />
+            <Image src={imgStoneInstalled} alt="Natural & Engineered Stone" fill sizes="50vw" style={{ objectFit: 'cover' }} />
           </div>
           <div className="material-panel-overlay" />
           <div className="material-panel-content reveal">
@@ -322,7 +373,12 @@ export default function Home() {
           </div>
           <div className="gallery-grid-v2 reveal">
             {GALLERY.map((item, i) => (
-              <div key={i} className={`gallery-item-v2${item.featured ? ' featured' : ''}`}>
+              <div
+                key={i}
+                className={`gallery-item-v2${item.featured ? ' featured' : ''}`}
+                onClick={() => setLightboxIndex(i)}
+                style={{ cursor: 'zoom-in' }}
+              >
                 <div className="gallery-item-v2-inner">
                   <Image
                     src={item.src}
@@ -331,17 +387,28 @@ export default function Home() {
                     sizes={item.featured ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 50vw, 33vw'}
                     style={{ objectFit: 'cover' }}
                     className="gallery-item-v2-img"
+                    unoptimized={typeof item.src === 'string'}
                   />
                   <div className="gallery-item-v2-overlay">
                     <div className="gallery-item-v2-info">
                       <h4>{item.label}</h4>
                       <span>{item.location}</span>
                     </div>
+                    <div className="gallery-item-v2-zoom"><i className="fas fa-expand"></i></div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
+
+          {lightboxIndex !== null && (
+            <Lightbox
+              images={GALLERY.map((g) => ({ src: g.src, alt: g.alt }))}
+              index={lightboxIndex}
+              onClose={() => setLightboxIndex(null)}
+              onNav={setLightboxIndex}
+            />
+          )}
         </div>
       </section>
 
@@ -428,7 +495,7 @@ export default function Home() {
                 </div>
                 <div className="contact-v2-info-item">
                   <div className="contact-v2-icon"><i className="fas fa-envelope"></i></div>
-                  <a href="mailto:info@devasthanam.com">info@devasthanam.com</a>
+                  <a href="mailto:devasthanamsurfaces@gmail.com">devasthanamsurfaces@gmail.com</a>
                 </div>
                 <div className="contact-v2-info-item">
                   <div className="contact-v2-icon"><i className="fab fa-whatsapp"></i></div>
@@ -441,6 +508,13 @@ export default function Home() {
 
             <div className="contact-v2-form reveal">
               <h3 style={{ marginBottom: '28px', color: 'var(--text-dark)', fontSize: '1.4rem' }}>Send Us an Enquiry</h3>
+              {formSubmitted ? (
+                <div style={{ textAlign: 'center', padding: '32px 0' }}>
+                  <i className="fas fa-check-circle" style={{ fontSize: '2.8rem', color: 'var(--secondary-color)', marginBottom: '16px', display: 'block' }}></i>
+                  <p style={{ fontWeight: 600, color: 'var(--primary-dark)', marginBottom: '8px' }}>Thank you!</p>
+                  <p style={{ color: 'var(--text-medium)', fontSize: '0.95rem' }}>We&apos;ll reach out within 24 hours.</p>
+                </div>
+              ) : (
               <form onSubmit={handleSubmit}>
                 <div className="contact-form-row">
                   <div className="form-group">
@@ -493,10 +567,11 @@ export default function Home() {
                     style={{ resize: 'vertical' }}
                   />
                 </div>
-                <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '8px' }}>
-                  Send Enquiry &rarr;
+                <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '8px' }} disabled={formSubmitting}>
+                  {formSubmitting ? 'Sending…' : 'Send Enquiry →'}
                 </button>
               </form>
+              )}
             </div>
           </div>
         </div>
