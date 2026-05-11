@@ -45,7 +45,7 @@ export default function Privacy() {
 
           <h2>Your Rights</h2>
           <p>
-            You have the right to request access to, correction of, or deletion of your personal data that we hold. To exercise these rights, please contact us at <a href="mailto:info@devasthanam.com">info@devasthanam.com</a>.
+            You have the right to request access to, correction of, or deletion of your personal data that we hold. To exercise these rights, please contact us at <a href="mailto:devasthanamsurfaces@gmail.com">devasthanamsurfaces@gmail.com</a>.
           </p>
 
           <h2>Contact Us</h2>
@@ -53,7 +53,7 @@ export default function Privacy() {
             If you have any questions about this Privacy Policy, please contact us:<br />
             <strong>Devasthanam India</strong><br />
             48, SN Roy Road, New Alipore, Kolkata — 700038<br />
-            Email: <a href="mailto:info@devasthanam.com">info@devasthanam.com</a><br />
+            Email: <a href="mailto:devasthanamsurfaces@gmail.com">devasthanamsurfaces@gmail.com</a><br />
             Phone: <a href="tel:+919007137413">+91 90071 37413</a>
           </p>
 

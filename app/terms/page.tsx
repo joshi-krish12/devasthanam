@@ -68,7 +68,7 @@ export default function Terms() {
             For any questions regarding these terms, contact us at:<br />
             <strong>Devasthanam India</strong><br />
             48, SN Roy Road, New Alipore, Kolkata — 700038<br />
-            Email: <a href="mailto:info@devasthanam.com">info@devasthanam.com</a><br />
+            Email: <a href="mailto:devasthanamsurfaces@gmail.com">devasthanamsurfaces@gmail.com</a><br />
             Phone: <a href="tel:+919007137413">+91 90071 37413</a>
           </p>
         </div>

@@ -113,6 +113,8 @@ export default function Home() {
   const [loading, setLoading] = useState(true)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', service: '', message: '' })
+  const [formSubmitting, setFormSubmitting] = useState(false)
+  const [formSubmitted, setFormSubmitted] = useState(false)
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 1600)
@@ -129,10 +131,36 @@ export default function Home() {
     }
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    alert('Thank you! Our team will reach out within 24 hours.')
-    setFormData({ name: '', phone: '', email: '', service: '', message: '' })
+    setFormSubmitting(true)
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: 'ffb4b26f-218a-4cfd-bdb5-042c33b095ff',
+          subject: `New Enquiry from ${formData.name}${formData.service ? ` — ${formData.service}` : ''}`,
+          from_name: 'Devasthanam Website',
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          'Product Interest': formData.service || 'Not specified',
+          message: formData.message,
+        }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setFormSubmitted(true)
+        setFormData({ name: '', phone: '', email: '', service: '', message: '' })
+      } else {
+        alert('Something went wrong. Please try again or WhatsApp us directly.')
+      }
+    } catch {
+      alert('Network error. Please WhatsApp us directly at +91 90071 37413.')
+    } finally {
+      setFormSubmitting(false)
+    }
   }
 
   return (
@@ -467,7 +495,7 @@ export default function Home() {
                 </div>
                 <div className="contact-v2-info-item">
                   <div className="contact-v2-icon"><i className="fas fa-envelope"></i></div>
-                  <a href="mailto:info@devasthanam.com">info@devasthanam.com</a>
+                  <a href="mailto:devasthanamsurfaces@gmail.com">devasthanamsurfaces@gmail.com</a>
                 </div>
                 <div className="contact-v2-info-item">
                   <div className="contact-v2-icon"><i className="fab fa-whatsapp"></i></div>
@@ -480,6 +508,13 @@ export default function Home() {
 
             <div className="contact-v2-form reveal">
               <h3 style={{ marginBottom: '28px', color: 'var(--text-dark)', fontSize: '1.4rem' }}>Send Us an Enquiry</h3>
+              {formSubmitted ? (
+                <div style={{ textAlign: 'center', padding: '32px 0' }}>
+                  <i className="fas fa-check-circle" style={{ fontSize: '2.8rem', color: 'var(--secondary-color)', marginBottom: '16px', display: 'block' }}></i>
+                  <p style={{ fontWeight: 600, color: 'var(--primary-dark)', marginBottom: '8px' }}>Thank you!</p>
+                  <p style={{ color: 'var(--text-medium)', fontSize: '0.95rem' }}>We&apos;ll reach out within 24 hours.</p>
+                </div>
+              ) : (
               <form onSubmit={handleSubmit}>
                 <div className="contact-form-row">
                   <div className="form-group">
@@ -532,10 +567,11 @@ export default function Home() {
                     style={{ resize: 'vertical' }}
                   />
                 </div>
-                <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '8px' }}>
-                  Send Enquiry &rarr;
+                <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '8px' }} disabled={formSubmitting}>
+                  {formSubmitting ? 'Sending…' : 'Send Enquiry →'}
                 </button>
               </form>
+              )}
             </div>
           </div>
         </div>

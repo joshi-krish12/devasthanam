@@ -30,6 +30,12 @@ const FAQS = [
   },
 ]
 
+// Replace this with the access key from web3forms.com
+// 1. Go to https://web3forms.com
+// 2. Enter devasthanamsurfaces@gmail.com and click "Create Access Key"
+// 3. Paste the key here
+const WEB3FORMS_KEY = 'ffb4b26f-218a-4cfd-bdb5-042c33b095ff'
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
@@ -41,6 +47,7 @@ export default function Contact() {
     terms: false,
   })
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   const handleChange = (
@@ -54,7 +61,7 @@ export default function Contact() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!formData.name || !formData.email || !formData.phone || !formData.productType || !formData.message) {
       alert('Please fill in all required fields.')
@@ -69,7 +76,35 @@ export default function Contact() {
       alert('Please enter a valid email address.')
       return
     }
-    setSubmitted(true)
+
+    setSubmitting(true)
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `New Enquiry from ${formData.name} — ${formData.productType}`,
+          from_name: 'Devasthanam Website',
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          'Product Interest': formData.productType,
+          'I am a': formData.userType || 'Not specified',
+          message: formData.message,
+        }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setSubmitted(true)
+      } else {
+        alert('Something went wrong. Please try again or WhatsApp us directly.')
+      }
+    } catch {
+      alert('Network error. Please WhatsApp us directly at +91 90071 37413.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -128,7 +163,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4>Email</h4>
-                    <p><a href="mailto:info@devasthanam.com">info@devasthanam.com</a></p>
+                    <p><a href="mailto:devasthanamsurfaces@gmail.com">devasthanamsurfaces@gmail.com</a></p>
                   </div>
                 </div>
                 <div className="contact-info-v2-item">
@@ -246,7 +281,9 @@ export default function Contact() {
                       <span>I agree to the <Link href="/contact">Terms &amp; Conditions</Link> and Privacy Policy</span>
                     </label>
                   </div>
-                  <button type="submit" className="btn-gold cfv2-submit">Send Inquiry</button>
+                  <button type="submit" className="btn-gold cfv2-submit" disabled={submitting}>
+                    {submitting ? 'Sending…' : 'Send Inquiry'}
+                  </button>
                 </form>
               )}
             </div>

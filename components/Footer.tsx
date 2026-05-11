@@ -25,17 +25,14 @@ export default function Footer() {
               that blend artistry with enduring quality.
             </p>
             <div className="footer-v2-social">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <a href="https://www.instagram.com/devasthanam.official" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <i className="fab fa-instagram"></i>
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <a href="https://www.facebook.com/share/1AftSThA3e/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                 <i className="fab fa-facebook-f"></i>
               </a>
               <a href="https://wa.me/919007137413" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
                 <i className="fab fa-whatsapp"></i>
-              </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                <i className="fab fa-youtube"></i>
               </a>
             </div>
           </div>
@@ -71,7 +68,7 @@ export default function Footer() {
                 <a href="tel:+919007137413">+91 90071 37413</a>
               </li>
               <li>
-                <a href="mailto:info@devasthanam.com">info@devasthanam.com</a>
+                <a href="mailto:devasthanamsurfaces@gmail.com">devasthanamsurfaces@gmail.com</a>
               </li>
               <li>
                 <a href="https://maps.google.com/?q=48+SN+Roy+Rd+Kolkata" target="_blank" rel="noopener noreferrer">
