@@ -157,7 +157,7 @@ export default function Home() {
         alert('Something went wrong. Please try again or WhatsApp us directly.')
       }
     } catch {
-      alert('Network error. Please WhatsApp us directly at +91 90071 37413.')
+      alert('Network error. Please WhatsApp us directly at +91 8420646222.')
     } finally {
       setFormSubmitting(false)
     }
@@ -192,7 +192,7 @@ export default function Home() {
           <div className="hero-v2-inner">
             <span className="hero-v2-badge">Kolkata · Pan India</span>
             <h1 className="hero-v2-title">
-              Where Stone<br /><em>Meets Soul</em>
+              India’s Leading Custom<br /><em>Marble Mandir Company.</em>
             </h1>
             <p className="hero-v2-desc">
               Premium Corian Mandirs, Wall Panels, Stone Panels &amp; Table Tops —
@@ -491,7 +491,7 @@ export default function Home() {
                 </div>
                 <div className="contact-v2-info-item">
                   <div className="contact-v2-icon"><i className="fas fa-phone"></i></div>
-                  <a href="tel:+919007137413">+91 90071 37413</a>
+                  <a href="tel:+919007137413">+91 8420646222</a>
                 </div>
                 <div className="contact-v2-info-item">
                   <div className="contact-v2-icon"><i className="fas fa-envelope"></i></div>
