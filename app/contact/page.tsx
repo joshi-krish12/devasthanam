@@ -101,7 +101,7 @@ export default function Contact() {
         alert('Something went wrong. Please try again or WhatsApp us directly.')
       }
     } catch {
-      alert('Network error. Please WhatsApp us directly at +91 90071 37413.')
+      alert('Network error. Please WhatsApp us directly at +91 8420646222.')
     } finally {
       setSubmitting(false)
     }
@@ -153,7 +153,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4>Phone</h4>
-                    <p><a href="tel:+919007137413">+91 90071 37413</a></p>
+                    <p><a href="tel:+919007137413">+91 8420646222</a></p>
                     <p className="contact-info-v2-hours">Mon–Sat, 10 AM – 7 PM</p>
                   </div>
                 </div>
@@ -325,7 +325,7 @@ export default function Contact() {
             <div className="cab-divider" />
             <div className="cab-item">
               <i className="fas fa-phone"></i>
-              <a href="tel:+919007137413">+91 90071 37413</a>
+              <a href="tel:+919007137413">+91 8420646222</a>
             </div>
             <div className="cab-divider" />
             <div className="cab-item">

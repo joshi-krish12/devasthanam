@@ -2568,10 +2568,16 @@ p {
     display: flex;
     align-items: center;
     overflow: hidden;
+    isolation: isolate;
 }
 .hero-v2-bg {
     position: absolute;
     inset: 0;
+    z-index: 0;
+}
+.hero-v2-bg > img,
+.hero-v2-bg > picture {
+    position: relative;
     z-index: 0;
 }
 .hero-v2-overlay {

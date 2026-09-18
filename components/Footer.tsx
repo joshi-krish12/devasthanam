@@ -65,7 +65,7 @@ export default function Footer() {
             <h4>Contact</h4>
             <ul>
               <li>
-                <a href="tel:+919007137413">+91 90071 37413</a>
+                <a href="tel:+919007137413">+91 8420646222</a>
               </li>
               <li>
                 <a href="mailto:devasthanamsurfaces@gmail.com">devasthanamsurfaces@gmail.com</a>
@@ -88,7 +88,6 @@ export default function Footer() {
           <div className="footer-v2-bottom-links">
             <Link href="/privacy">Privacy Policy</Link>
             <Link href="/terms">Terms &amp; Conditions</Link>
-            <Link href="/privacy#disclaimer">Disclaimer</Link>
           </div>
         </div>
       </div>
