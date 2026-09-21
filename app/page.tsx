@@ -195,6 +195,9 @@ export default function Home() {
               India’s Leading Custom<br /><em>Marble Mandir Company.</em>
             </h1>
             <p className="hero-v2-desc">
+              Starting from just ₹1.5L — handcrafted marble and corian mandirs, wall panels and table tops for homes, offices and sacred spaces.
+            </p>
+            <p className="hero-v2-desc">
               Premium Corian Mandirs, Wall Panels, Stone Panels &amp; Table Tops —
               handcrafted by master artisans in Kolkata.
             </p>
